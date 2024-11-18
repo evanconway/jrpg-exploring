@@ -26,6 +26,7 @@
     {"id":{"name":"obj_world","path":"objects/obj_world/obj_world.yy",},},
     {"id":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
     {"id":{"name":"rm_start","path":"rooms/rm_start/rm_start.yy",},},
+    {"id":{"name":"Battle","path":"scripts/Battle/Battle.yy",},},
     {"id":{"name":"World","path":"scripts/World/World.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
     {"id":{"name":"spr_tile_default","path":"sprites/spr_tile_default/spr_tile_default.yy",},},

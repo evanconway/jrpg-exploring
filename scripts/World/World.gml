@@ -2,6 +2,11 @@ function world_update() {
 	with (obj_world) {
 		if (variable_instance_exists(id, "update")) update();
 	}
+	
+	// just for testing battle starts
+	if (keyboard_check_pressed(vk_space)) {
+		battle_start();
+	}
 }
 
 function world_draw() {

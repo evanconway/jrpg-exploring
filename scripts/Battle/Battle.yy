@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Battle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Battle",
+  "parent":{
+    "name":"jrpg-exploring",
+    "path":"jrpg-exploring.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
