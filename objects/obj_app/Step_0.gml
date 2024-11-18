@@ -3,6 +3,10 @@ if (keyboard_check_pressed(192)) {
 }
 
 if (global.console_open) console_update();
+else {
+	// handle game input
+}
+
 if (!global.console_open && variable_struct_exists(global.updateable, "update")) {
 	global.updateable.update();
 }

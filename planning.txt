@@ -23,3 +23,5 @@ So maybe we should create a system that processes actions next, and worry about 
 I just realized this console idea may not work well without more infrastructure. I added a basic thing to detect key inputs but it doesn't block input checking for the rest of the app.
 
 For now, we just won't have game inputs. We'll work with this console system to work out system kinks. I'm not worried about just hacking in some sort of input system later.
+
+We started the transition for a battle, and realized we may need a system that can accomodate lots of different starting animations. As for the battles themselves. We'll definitely at least need the option for different backgrounds. We'll spend some time thinking about this later.
