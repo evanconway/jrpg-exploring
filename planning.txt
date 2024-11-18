@@ -1,0 +1,5 @@
+17th of November, 2024
+
+Our first goal is to get the minimum features that a jrpg has. Which IMO is a top down world with a character you can move around, and the ability to start a battle sequence. We got a lot of experience changing game states with our point and click adventures. I'm confident I can copy the same system and apply it here. I wonder if it might be best to always require a specific updateable? Like the over world doesn't work unless you're updating the overworld updateable. We'll have to see how we want to handle things like drawing overworld assets while other logic is going on. 
+
+Let's just get the camera setup, and a square we can move around with the arrow keys.
