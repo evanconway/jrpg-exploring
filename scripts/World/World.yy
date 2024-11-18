@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"World",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"World",
+  "parent":{
+    "name":"jrpg-exploring",
+    "path":"jrpg-exploring.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

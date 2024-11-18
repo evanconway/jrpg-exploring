@@ -9,7 +9,10 @@
     "name":"Default",
   },
   "defaultScriptType":1,
-  "Folders":[],
+  "Folders":[
+    {"$GMFolder":"","%Name":"app","folderPath":"folders/app.yy","name":"app","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"world","folderPath":"folders/world.yy","name":"world","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
@@ -18,12 +21,20 @@
   },
   "name":"jrpg-exploring",
   "resources":[
+    {"id":{"name":"obj_app","path":"objects/obj_app/obj_app.yy",},},
+    {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
+    {"id":{"name":"obj_world","path":"objects/obj_world/obj_world.yy",},},
     {"id":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
+    {"id":{"name":"rm_start","path":"rooms/rm_start/rm_start.yy",},},
+    {"id":{"name":"World","path":"scripts/World/World.yy",},},
+    {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
+    {"id":{"name":"spr_tile_default","path":"sprites/spr_tile_default/spr_tile_default.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
+    {"roomId":{"name":"rm_start","path":"rooms/rm_start/rm_start.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
