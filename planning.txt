@@ -17,3 +17,9 @@ We could still do a simple turned based system. In something like Earthbound, al
 Regardless of what we choose, I think I've established something: we should keep a queue of actions to be processed. After each action is processed, we could determine if it's time to request player input or not. We could use either simple turn based or the speed system I mentioned earlier. Actually if it's turn based, we could just wait for the queue to be empty then just get all the next actions from the players and npcs. 
 
 So maybe we should create a system that processes actions next, and worry about the turn structure later. This also brings me to consider some sort of event system. When making other games I often caught myself wishing I could just "trigger" specific moments, and always had to rig up some sort of hack to make them work which I later ripped out. Perhaps this could be our chance to build that system. I'm thinking something where events are an enum, but can be entered during game via a console to trigger them. That'll be our next thing to think about.
+
+18th of November, 2024
+
+I just realized this console idea may not work well without more infrastructure. I added a basic thing to detect key inputs but it doesn't block input checking for the rest of the app.
+
+For now, we just won't have game inputs. We'll work with this console system to work out system kinks. I'm not worried about just hacking in some sort of input system later.
