@@ -25,7 +25,6 @@ function Battle() constructor {
 	};
 }
 
-// feather ignore GM1043
 function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.updateable = get_intro_animation(new Battle());
 }
