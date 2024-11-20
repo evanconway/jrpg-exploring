@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Battle",
+  "%Name":"battle_intro_animations",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Battle",
+  "name":"battle_intro_animations",
   "parent":{
     "name":"battle",
     "path":"folders/battle.yy",

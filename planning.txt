@@ -29,3 +29,19 @@ We started the transition for a battle, and realized we may need a system that c
 19th of November, 2024
 
 We could try and create a number of console triggered actions for slide-show battles. Like Player Attack and Enemy Attack or something.
+
+When I made the battle_start script I was worried because that one script isn't going to work for all the different kinds of battles. We'll need different things for backgrounds, start animations, that sort of thing. But it did occur to me that we could add a massive option object as the single argument for the battle_start script. Then allow for arguments in our console commands.
+
+For some reason I'm mentally stuck on all the transition aspects of a slide-show battle. I'll probably want some sort of animation on the over-world that ultimately fades to black. Do I want some sort of animation for the enemy and player "appearing" in the battle? Similar to how pokemon has the enemy slide into frame from off screen. I think some Final Fantasy games have the enemies appear 1 by 1 at the start. How would I handle wanting different kinds of intro animations like this? I wonder if we need to make assets in the battle similar to world objects in that we can set their position and sprite via an updateable. I suppose we could write functions for different kinds of animation starts, give them names, and let that be a parameter in our console function.
+
+Though, honestly, as I write this out, I'm being more confident that we can figure out all this stuff later. I'm pretty sure I'm just going to have a simple animation to start the fight, fade to black, then fade back with any enemies already in-frame. I think if we want something more complicated we can just add it in later.
+
+So maybe next we should focus on how to store and manipulate stats like health, mana, or whatever. Because we'll definitely need that regardless of everything else.
+
+Ah, one thing I do think we'll want is the ability to add enemies mid-fight. And of course we'll want to be able to remove enemies mid-fight. So maybe we should focus next on creating actions wich add, and remove enemies, and add the concept of health and the ability to change it. 
+
+Now I'm stuck on how enemy position works on screen. Maybe we shouldn't worry about this yet, but it will come up later. To clarify, if a battle started with 1 enemy I'd want it to start center screen. If it started with 2 enemies I'd want it to start with them side-by-side and neither in the center. But if the battle started with 1 enemey in the center, but later another entered the battle, I'd want it to be to the side of the center enemy and the original enemy does not change position. This is basically how Earthbound works. And it wouldn't be hard to do this, but honestly I'm not sure if that's the behavior I'll ultimately want. So perhaps for now we'll just hack a crappy position system in and not worry about it. We'll change it later. 
+
+I've changed my mind, I want to update the battle script right now. I want to be able to write custom start animations. We'll just have a default one for now. Note we may also need to make custom outro and victory animations. 
+
+I was moving things around and noticed that I can change what function the update function of a struct is inside that very update function. We'll have to remember this as a possible way to organize logic. It might be better than using our steps[step] system.
