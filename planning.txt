@@ -45,3 +45,5 @@ Now I'm stuck on how enemy position works on screen. Maybe we shouldn't worry ab
 I've changed my mind, I want to update the battle script right now. I want to be able to write custom start animations. We'll just have a default one for now. Note we may also need to make custom outro and victory animations. 
 
 I was moving things around and noticed that I can change what function the update function of a struct is inside that very update function. We'll have to remember this as a possible way to organize logic. It might be better than using our steps[step] system.
+
+Last thought for today. A battle is ultimately just numbers in an invisible spreadsheet changing while fun animations play. But I wonder should we have animations play in response to numbers changing, or should we trigger animations which themselves change the numbers? Something to think about until we come back to this.
