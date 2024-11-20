@@ -7,8 +7,10 @@ else {
 	// handle game input
 }
 
-if (!global.console_open && variable_struct_exists(global.updateable, "update")) {
-	global.updateable.update();
+updateable = global.updateable;
+
+if (!global.console_open && is_struct(updateable) && variable_struct_exists(updateable, "update")) {
+	updateable.update();
 }
 
 camera_set_view_size(view_camera[0], res.width, res.height);

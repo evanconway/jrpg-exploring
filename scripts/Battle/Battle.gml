@@ -2,8 +2,8 @@ function battle_create() {
 	return {
 		blackout_alpha: 1,
 		update: function() {
-			blackout_alpha -= 0.01;
-			if (blackout_alpha < -0.2) global.updateable = global.world;
+			blackout_alpha = clamp(blackout_alpha - 0.01, 0, 1);
+			// cannot naturally leave yet
 		},
 		draw_gui: function() {
 			draw_set_color(c_gray);

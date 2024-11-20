@@ -25,3 +25,7 @@ I just realized this console idea may not work well without more infrastructure.
 For now, we just won't have game inputs. We'll work with this console system to work out system kinks. I'm not worried about just hacking in some sort of input system later.
 
 We started the transition for a battle, and realized we may need a system that can accomodate lots of different starting animations. As for the battles themselves. We'll definitely at least need the option for different backgrounds. We'll spend some time thinking about this later.
+
+19th of November, 2024
+
+We could try and create a number of console triggered actions for slide-show battles. Like Player Attack and Enemy Attack or something.
