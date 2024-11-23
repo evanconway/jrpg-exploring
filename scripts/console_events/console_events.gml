@@ -31,10 +31,16 @@ global.console_events = {
 	battle_start: function() {
 		battle_start();
 	},
+	battle_start_flash: function() {
+		global.updateable = battle_get_intro_flash_fade(new Battle());
+	},
 	battle_enemy_add: function() {
 		battle_enemy_add(new BattleEnemy());
 	},
 	battle_enemy_add_big: function() {
 		battle_enemy_add(new BattleEnemyBig());
+	},
+	battle_message_test: function() {
+		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
 	},
 };

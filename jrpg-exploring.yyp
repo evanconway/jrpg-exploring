@@ -24,6 +24,7 @@
   },
   "name":"jrpg-exploring",
   "resources":[
+    {"id":{"name":"fnt_battle","path":"fonts/fnt_battle/fnt_battle.yy",},},
     {"id":{"name":"fnt_console","path":"fonts/fnt_console/fnt_console.yy",},},
     {"id":{"name":"fnt_styleable_text_font_default","path":"fonts/fnt_styleable_text_font_default/fnt_styleable_text_font_default.yy",},},
     {"id":{"name":"obj_app","path":"objects/obj_app/obj_app.yy",},},

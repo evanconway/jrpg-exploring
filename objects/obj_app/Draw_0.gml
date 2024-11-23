@@ -1,3 +1,3 @@
-if (is_struct(updateable) && variable_struct_exists(updateable, "draw")) {
-	updateable.draw();
+if (is_struct(global.updateable) && variable_struct_exists(global.updateable, "draw")) {
+	global.updateable.draw();
 }
