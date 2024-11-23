@@ -60,3 +60,9 @@ Next I think we should try and make console events for altering game values. Thi
 Well regardless of all this, we definitely need the ability to have characters in the battle, and for them to be defeated. Otherwise all the other factors like changing health, mana, or whatever aren't going to be testable. We should make console commands for adding characters to a battle. I think this data could be stored in the battle itself rather than globally, except for player health. Actually, yes, I'd like our next feature to be the ability to add and remove enemy characters from a battle.
 
 For positioning enemies, we may want to insist on a middle-center origin always.
+
+I've noticed something while working on this. I want to change how battles start so that I can instantly start a battle from the console. I don't want to wait through the intro animation each time. But this does mean that we'll have to change how the intro animations work so that we can still draw the battle while also executing the intro animation. This is kind of weird because the intro animation will need access to the battle itself so it can decide when to draw the battle. 
+
+To clarify the above, I'm specifically interested in the black fade outs. I don't want the battle to have a fade from black built into it. I think the intro animation should handle this. But of course if the intro animation is the current updateable, it needs access to the battle and its draw function so it can handle doing the fade from black.
+
+But I just realized something, intro animation already have access to the battle so they can set the global.updateable when they're done. So we should be able to just move things around. Let's try that. 

@@ -6,10 +6,20 @@
 function battle_get_intro_default(battle_updateable) {
 	return {
 		battle_updateable,
+		update: function() {
+			global.updateable = battle_updateable;
+		}
+	};
+}
+
+function battle_get_intro_flash_fade(battle_updateable) {
+	return {
+		battle_updateable,
 		time: 0,
 		blackout_alpha: 0,
 		flash_cycle_time: 14,
 		number_of_flash_cycles: 4,
+		draw_battle: false,
 		update: function() {
 			time += 1;
 			var mod_flash = time % flash_cycle_time;
@@ -22,11 +32,22 @@ function battle_get_intro_default(battle_updateable) {
 		fade_to_black: function() {
 			blackout_alpha += 0.012;
 			if (blackout_alpha >= 1) {
+				blackout_alpha = 1;
+				draw_battle = true;
+				update = fade_from_black;
+			}
+		},
+		fade_from_black: function() {
+			blackout_alpha -= 0.012;
+			if (blackout_alpha <= 0) {
 				global.updateable = battle_updateable;
 			}
 		},
-		draw: world_draw,
+		draw: function() {
+			if (!draw_battle) world_draw();
+		},
 		draw_gui: function() {
+			if (draw_battle) battle_updateable.draw_gui();
 			if (blackout_alpha > 0) {
 				draw_set_color(c_black);
 				draw_set_alpha(blackout_alpha);
