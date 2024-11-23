@@ -1,7 +1,7 @@
 function console_get_options(text) {
 	if (text == "") return [];
 	var commands = struct_get_names(global.console_events);
-	array_sort(commands, true); // "true" is default ascending for strings
+	array_sort(commands, true); // "true" means use default ascending algo, this automatically accounts for strings
 	return array_filter(commands, method({ text }, function(command) {
 		return string_starts_with(command, text);
 	}));
@@ -10,10 +10,15 @@ function console_get_options(text) {
 function console_get_autocomplete(text) {
 	var options = console_get_options(text);
 	if (array_length(options) == 0) return "";
-	
-	// for now, we'll just auto_complete the first viable option
-	// we can just cut by length because we know options start with the given text
-	return string_delete(options[0], 1, string_length(text));
+	/*
+	Commands are all in snake case. And we'll organize command concepts by words.
+	So auto-complete should return the next word that could be completed from
+	the given text. Since options are already sorted, we'll use the first one.
+	*/
+	var rest_of_first_option = string_delete(options[0], 1, string_length(text));
+	// Search for the next underscore because that's what separates words in this syntax.
+	var next_underscore_index = string_pos("_", rest_of_first_option);
+	return next_underscore_index == 0 ? rest_of_first_option : string_copy(rest_of_first_option, 1, next_underscore_index);
 }
 
 global.console_events = {
