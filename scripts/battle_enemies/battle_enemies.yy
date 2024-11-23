@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"battle_enemies",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"battle_enemies",
+  "parent":{
+    "name":"battle",
+    "path":"folders/battle.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

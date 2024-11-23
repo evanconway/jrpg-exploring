@@ -1,15 +1,3 @@
-function BattleEnemy() constructor {
-	enemy_health = 100;
-	sprite = spr_enemy;
-	get_width = function() {
-		return sprite_get_width(sprite);
-	};
-	draw = function(x, y) {
-		draw_set_alpha(1);
-		draw_sprite(sprite, 0, x, y);
-	};
-}
-
 function Battle() constructor {
 	enemies = [];
 	static fight = function() {
@@ -43,9 +31,12 @@ function Battle() constructor {
 			total_width += enemies[i].get_width();
 		}
 		var draw_x = (display_get_gui_width() / 2) - (total_width / 2);
+		var draw_y = display_get_gui_height() / 2;
 		for (var i = 0; i < enemy_count; i++) {
-			enemies[i].draw(draw_x, 100);
-			draw_x += enemies[i].get_width();
+			// add half width before and after draw because enemy sprite origins are middle-center
+			draw_x += enemies[0].get_width() /2 ;
+			enemies[i].draw(draw_x, draw_y);
+			draw_x += enemies[i].get_width() / 2;
 			draw_x += enemy_gap;
 		}
 	};

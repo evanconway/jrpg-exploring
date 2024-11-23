@@ -16,4 +16,9 @@ function console_events(e="") {
 			battle_enemy_add(global.updateable, new BattleEnemy());
 		}
 	}
+	if (e == "battle_enemy_add_big") {
+		if (instanceof(global.updateable) == "Battle") {
+			battle_enemy_add(global.updateable, new BattleEnemyBig());
+		}
+	}
 }
