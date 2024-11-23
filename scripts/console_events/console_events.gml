@@ -32,14 +32,9 @@ global.console_events = {
 		battle_start();
 	},
 	battle_enemy_add: function() {
-		if (instanceof(global.updateable) == "Battle") {
-			battle_enemy_add(global.updateable, new BattleEnemy());
-		}
+		battle_enemy_add(new BattleEnemy());
 	},
 	battle_enemy_add_big: function() {
-		if (instanceof(global.updateable) == "Battle") {
-			battle_enemy_add(global.updateable, new BattleEnemyBig());
-		}
+		battle_enemy_add(new BattleEnemyBig());
 	},
 };
-

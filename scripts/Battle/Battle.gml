@@ -38,6 +38,11 @@ function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.updateable = get_intro_animation(new Battle());
 }
 
-function battle_enemy_add(battle, enemy) {
-	array_push(battle.enemies, enemy);
+function __battle_is_active() {
+	return instanceof(global.updateable) == "Battle";
+}
+
+function battle_enemy_add(enemy) {
+	if (!__battle_is_active()) return;
+	array_push(global.updateable.enemies, enemy);
 }
