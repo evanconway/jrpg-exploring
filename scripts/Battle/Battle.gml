@@ -66,7 +66,6 @@ function battle_inactive() {
 	return instanceof(global.updateable) != "Battle";
 }
 
-
 function battle_draw_tdt(tdt) {
 	draw_set_valign(fa_middle);
 	draw_set_halign(fa_center);
@@ -77,6 +76,14 @@ function battle_draw_tdt(tdt) {
 	tag_decorated_text_draw(tdt, display_get_gui_width() / 2, rect_height / 2);
 }
 
+function battle_get_message_tdt(text) {
+	var width = display_get_gui_width() * 0.8;
+	var height = display_get_gui_height() * 0.2;
+	var tdt = new TagDecoratedTextDefault(text, "f:fnt_battle t:80,1", width, height);
+	tag_decorated_text_reset_typing(tdt);
+	return tdt;
+}
+
 /**
  * Display the given text as a message during battle.
  *
@@ -85,16 +92,10 @@ function battle_draw_tdt(tdt) {
 function battle_message(text) {
 	if (battle_inactive()) return;
 	var battle = global.updateable;
-	var text_dims = {
-		width: display_get_gui_width() * 0.8,
-		height: display_get_gui_height() * 0.2,
-	};
-	var tdt = new TagDecoratedTextDefault(text, "f:fnt_battle t:80,1", text_dims.width, text_dims.height);
-	tag_decorated_text_reset_typing(tdt);
+	var tdt = battle_get_message_tdt(text);
 	global.updateable = {
 		battle,
 		tdt,
-		text_dims,
 		update: function() {
 			if (!keyboard_check_pressed(vk_space)) return;
 			if (tag_decorated_text_get_typing_finished(tdt)) {

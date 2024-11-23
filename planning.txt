@@ -74,3 +74,11 @@ We were able to update our console to be more useable. The only thing missing no
 Actually, I'm second guessing myself. The reason is because I'm not sure how I want the text messages to behave relative to the animations. For a basic attack animation I want to see the text appear at the top of the screen. It'll type out. After it's complete I want it to remain there while a smack or damage animation plays. Then I want the text to clear out and display the amount of damage done. Or maybe I'll want it to list the damage before the animation. Hmm, perhaps the text can be completely controlled by the animation. I'm just not sure if it should be an element of the battle, or perhaps something completely separate that animations control.
 
 I just realized something, we could use the same logic we used for intro animations. We could create updateables that contain a reference to the battle and use the draw function of the battle inside that updateable. I'm almost wondering if our idea of the action queue system described earlier won't be necessary. Perhaps battles can just be a sequence of regular updateables which pass off the same battle object between them.
+
+Ok I feel much better about messages, and the flow of battles in general now. Simply changing the updateable and maintaining a reference to the battle will work really well. It gives me plenty of flexibility.
+
+Let's just get some thoughts down so we can reference them later:
+
+BATTLE FLOW
+
+A battle is merely the state of an active updateable that references a battle object in some way. Presumeably we'll always invoke the battle draw function of that instance while this updateable is live, but it's not a hard rule. We'll design battle updateables to always link back to the same instance. But that instance will immediately determine which updateable should be live next. The battle instance itself almost doesn't need to be an updateable.
