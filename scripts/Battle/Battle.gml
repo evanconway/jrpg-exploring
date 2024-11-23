@@ -1,5 +1,6 @@
 function Battle() constructor {
 	enemies = [];
+	battle_message = undefined; // tag decorated text instance
 	static update = function() {
 		// the real battle update loop, not implemented yet
 	};

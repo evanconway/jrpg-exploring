@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"TagDecoratedText",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"TagDecoratedText",
+  "parent":{
+    "name":"TagDecoratedText",
+    "path":"folders/TagDecoratedText.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
