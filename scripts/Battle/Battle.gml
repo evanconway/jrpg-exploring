@@ -66,6 +66,17 @@ function battle_inactive() {
 	return instanceof(global.updateable) != "Battle";
 }
 
+
+function battle_draw_tdt(tdt) {
+	draw_set_valign(fa_middle);
+	draw_set_halign(fa_center);
+	draw_set_alpha(1);
+	draw_set_color(c_black);
+	var rect_height = tag_decorated_text_get_height(tdt) * 1.2;
+	draw_rectangle(0, 0, display_get_gui_width(), rect_height, false);
+	tag_decorated_text_draw(tdt, display_get_gui_width() / 2, rect_height / 2);
+}
+
 /**
  * Display the given text as a message during battle.
  *
@@ -94,13 +105,7 @@ function battle_message(text) {
 		},
 		draw_gui: function() {
 			battle.draw_gui();
-			draw_set_valign(fa_middle);
-			draw_set_halign(fa_center);
-			draw_set_alpha(1);
-			draw_set_color(c_black);
-			var rect_height = text_dims.height * 1.2;
-			draw_rectangle(0, 0, display_get_gui_width(), rect_height, false);
-			tag_decorated_text_draw(tdt, display_get_gui_width() / 2, rect_height / 2);
+			battle_draw_tdt(tdt);
 		},
 	}
 }
