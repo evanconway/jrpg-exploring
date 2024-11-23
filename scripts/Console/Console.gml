@@ -31,20 +31,38 @@ function console_update() {
 	if (keyboard_check_pressed(189) && keyboard_check(vk_shift)) global.console_text += "_";
 	if (keyboard_check_pressed(vk_backspace) && global.console_text != "") global.console_text = string_copy(global.console_text, 0, string_length(global.console_text) - 1);
 	if (keyboard_check_pressed(vk_enter)) {
-		console_events(global.console_text);
+		var event_function = struct_get(global.console_events, global.console_text);
+		if (is_method(event_function)) event_function();
 		global.console_text = "";
 		global.console_open = false;
 	}
 }
 
 function console_draw() {
-	draw_set_alpha(0.3);
+	var padding = 4;
+	// draw background
+	draw_set_alpha(0.75);
 	draw_set_color(c_black);
 	draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
-	draw_set_alpha(1);
+	
+	draw_set_alpha(1)
 	draw_set_color(c_white);
+	draw_set_valign(fa_top);
+	draw_set_halign(fa_left);
+	var options = console_get_options(global.console_text);
+	var draw_y = padding;
+	for (var i = 0; i < array_length(options); i++) {
+		draw_text(padding, draw_y, options[i]);
+		draw_y += string_height(options[i]);
+	}
+	
+	// draw text
+	var text_color = c_red
+	if (array_length(options) > 0) text_color = c_white;
+	if (struct_exists(global.console_events, global.console_text)) text_color = c_lime;
+	draw_set_color(text_color);
 	draw_set_font(fnt_console);
 	draw_set_valign(fa_bottom);
 	draw_set_halign(fa_left);
-	draw_text(4, display_get_gui_height() - 4, global.console_text);
+	draw_text(padding, display_get_gui_height() - padding, global.console_text);
 }

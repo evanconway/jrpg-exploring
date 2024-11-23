@@ -1,24 +1,31 @@
-function console_events(e="") {
-	if (e == "updateable_clear") {
+function console_get_options(text) {
+	if (text == "") return [];
+	var commands = struct_get_names(global.console_events);
+	array_sort(commands, true); // "true" is default ascending for strings
+	return array_filter(commands, method({ text }, function(command) {
+		return string_starts_with(command, text);
+	}));
+}
+
+global.console_events = {
+	updateable_clear: function() {
 		global.updateable = undefined;
-		return;
-	}
-	if (e == "updateable_world") {
+	},
+	updateable_world: function() {
 		global.updateable = global.world;
-		return;
-	}
-	if (e == "battle_start") {
+	},
+	battle_start: function() {
 		battle_start();
-		return;
-	}
-	if (e == "battle_enemy_add") {
+	},
+	battle_enemy_add: function() {
 		if (instanceof(global.updateable) == "Battle") {
 			battle_enemy_add(global.updateable, new BattleEnemy());
 		}
-	}
-	if (e == "battle_enemy_add_big") {
+	},
+	battle_enemy_add_big: function() {
 		if (instanceof(global.updateable) == "Battle") {
 			battle_enemy_add(global.updateable, new BattleEnemyBig());
 		}
-	}
-}
+	},
+};
+
