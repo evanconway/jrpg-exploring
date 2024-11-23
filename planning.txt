@@ -81,4 +81,4 @@ Let's just get some thoughts down so we can reference them later:
 
 BATTLE FLOW
 
-A battle is merely the state of an active updateable that references a battle object in some way. Presumeably we'll always invoke the battle draw function of that instance while this updateable is live, but it's not a hard rule. We'll design battle updateables to always link back to the same instance. But that instance will immediately determine which updateable should be live next. The battle instance itself almost doesn't need to be an updateable.
+A battle is merely an app state where the active updateable references a battle instance in some way. Presumeably we'll always invoke the battle draw function of that instance while this updateable is live but it's not a hard rule. We'll design battle updateables to always link back to the same instance. But that instance will immediately determine which updateable should be live next. The battle instance itself almost doesn't need to be an updateable.
