@@ -11,8 +11,8 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"app","folderPath":"folders/app.yy","name":"app","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"console","folderPath":"folders/console.yy","name":"console","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"battle","folderPath":"folders/battle.yy","name":"battle","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"console","folderPath":"folders/console.yy","name":"console","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"world","folderPath":"folders/world.yy","name":"world","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[],
@@ -34,6 +34,7 @@
     {"id":{"name":"console_events","path":"scripts/console_events/console_events.yy",},},
     {"id":{"name":"Console","path":"scripts/Console/Console.yy",},},
     {"id":{"name":"World","path":"scripts/World/World.yy",},},
+    {"id":{"name":"spr_enemy","path":"sprites/spr_enemy/spr_enemy.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
     {"id":{"name":"spr_tile_default","path":"sprites/spr_tile_default/spr_tile_default.yy",},},
   ],

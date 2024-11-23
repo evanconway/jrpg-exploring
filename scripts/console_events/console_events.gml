@@ -11,4 +11,9 @@ function console_events(e="") {
 		battle_start();
 		return;
 	}
+	if (e == "battle_enemy_add") {
+		if (instanceof(global.updateable) == "Battle") {
+			battle_enemy_add(global.updateable, new BattleEnemy());
+		}
+	}
 }
