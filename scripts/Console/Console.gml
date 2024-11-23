@@ -36,9 +36,16 @@ function console_update() {
 		global.console_text = "";
 		global.console_open = false;
 	}
+	if (keyboard_check_pressed(vk_tab)) {
+		global.console_text += console_get_autocomplete(global.console_text);
+	}
 }
 
 function console_draw() {
+	draw_set_font(fnt_console);
+	
+	var command = global.console_text;
+	
 	var padding = 4;
 	// draw background
 	draw_set_alpha(0.75);
@@ -49,20 +56,37 @@ function console_draw() {
 	draw_set_color(c_white);
 	draw_set_valign(fa_top);
 	draw_set_halign(fa_left);
-	var options = console_get_options(global.console_text);
+	var options = console_get_options(command);
 	var draw_y = padding;
-	for (var i = 0; i < array_length(options); i++) {
-		draw_text(padding, draw_y, options[i]);
-		draw_y += string_height(options[i]);
+	if (command == "") {
+		// do nothing
+	} else if (array_length(options) == 0) {
+		draw_set_color(c_red);
+		draw_text(padding, draw_y, "no matches");
+	} else {
+		for (var i = 0; i < array_length(options); i++) {
+			draw_text(padding, draw_y, options[i]);
+			draw_y += string_height(options[i]);
+		}
 	}
 	
 	// draw text
-	var text_color = c_red
-	if (array_length(options) > 0) text_color = c_white;
-	if (struct_exists(global.console_events, global.console_text)) text_color = c_lime;
-	draw_set_color(text_color);
-	draw_set_font(fnt_console);
 	draw_set_valign(fa_bottom);
 	draw_set_halign(fa_left);
-	draw_text(padding, display_get_gui_height() - padding, global.console_text);
+	
+	if (command == "") {
+		draw_set_color(c_dkgray);
+		draw_text(padding, display_get_gui_height() - padding, "type a command");
+		return;
+	}
+	
+	var text_color = c_red
+	if (array_length(options) > 0) text_color = c_white;
+	if (struct_exists(global.console_events, command)) text_color = c_lime;
+	draw_set_color(text_color);
+	draw_text(padding, display_get_gui_height() - padding, command);
+	
+	var autocomplete = console_get_autocomplete(command);
+	draw_set_color(c_dkgray);
+	draw_text(padding + string_width(command), display_get_gui_height() - padding, autocomplete);
 }

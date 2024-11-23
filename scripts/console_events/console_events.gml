@@ -7,6 +7,15 @@ function console_get_options(text) {
 	}));
 }
 
+function console_get_autocomplete(text) {
+	var options = console_get_options(text);
+	if (array_length(options) == 0) return "";
+	
+	// for now, we'll just auto_complete the first viable option
+	// we can just cut by length because we know options start with the given text
+	return string_delete(options[0], 1, string_length(text));
+}
+
 global.console_events = {
 	updateable_clear: function() {
 		global.updateable = undefined;
