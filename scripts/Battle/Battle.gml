@@ -9,6 +9,12 @@ function Battle() constructor {
 		draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
 	};
 	static draw_enemies = function() {
+		/*
+		We may want to change this in the future so that enemy location
+		is given when the enemies our added. So instead of this function
+		determining where enemies are drawn, the logic that added them
+		determines it.
+		*/
 		var total_width = 0;
 		var enemy_gap = 10; // number of pixels
 		var enemy_count = array_length(enemies);
@@ -34,16 +40,39 @@ function Battle() constructor {
 	};
 }
 
+/**
+ * Use this function when an updateable dealing with battles has completed, and
+ * the next step in the battle must be determined. Logic is executed here to 
+ * determine what the next updateable should be.
+ *
+ * @param {Struct.Battle} battle Battle instance to return to.
+ */
+function battle_return(battle) {
+	if (instanceof(battle) != "Battle") {
+		show_error("battle_return was given a non-battle argument", true);
+	}
+	global.updateable = battle;
+}
+
+// not finished
 function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.updateable = get_intro_animation(new Battle());
 }
 
-function __battle_inactive() {
+/**
+ * Returns true if current global updateable is a battle instance.
+ */
+function battle_inactive() {
 	return instanceof(global.updateable) != "Battle";
 }
 
+/**
+ * Display the given text as a message during battle.
+ *
+ * @param {String} text
+ */
 function battle_message(text) {
-	if (__battle_inactive()) return;
+	if (battle_inactive()) return;
 	var battle = global.updateable;
 	var text_dims = {
 		width: display_get_gui_width() * 0.8,
@@ -58,12 +87,7 @@ function battle_message(text) {
 		update: function() {
 			if (!keyboard_check_pressed(vk_space)) return;
 			if (tag_decorated_text_get_typing_finished(tdt)) {
-				/*
-				Instead of just setting the updateable back to the battle, we'll
-				probably want to execute a special script that executes battle
-				logic to determine what the next updateable should be.
-				*/
-				global.updateable = battle;
+				battle_return(battle);
 			} else {
 				tag_decorated_text_advance(tdt);
 			}
@@ -82,6 +106,6 @@ function battle_message(text) {
 }
 
 function battle_enemy_add(enemy) {
-	if (__battle_inactive()) return;
+	if (battle_inactive()) return;
 	array_push(global.updateable.enemies, enemy);
 }

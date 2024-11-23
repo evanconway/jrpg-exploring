@@ -16,6 +16,10 @@ function console_get_autocomplete(text) {
 	the given text. Since options are already sorted, we'll use the first one.
 	*/
 	var rest_of_first_option = string_delete(options[0], 1, string_length(text));
+	
+	// we don't need to continue our parsing if there's only 1 viable option
+	if (array_length(options) == 1) return rest_of_first_option;
+	
 	// Search for the next underscore because that's what separates words in this syntax.
 	var next_underscore_index = string_pos("_", rest_of_first_option);
 	return next_underscore_index == 0 ? rest_of_first_option : string_copy(rest_of_first_option, 1, next_underscore_index);
@@ -41,6 +45,6 @@ global.console_events = {
 		battle_enemy_add(new BattleEnemyBig());
 	},
 	battle_message_test: function() {
-		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
+		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
 	},
 };
