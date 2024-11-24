@@ -40,6 +40,7 @@
     {"id":{"name":"StyleableTextAnimator","path":"scripts/StyleableTextAnimator/StyleableTextAnimator.yy",},},
     {"id":{"name":"StyleableTextTyper","path":"scripts/StyleableTextTyper/StyleableTextTyper.yy",},},
     {"id":{"name":"TagDecoratedText","path":"scripts/TagDecoratedText/TagDecoratedText.yy",},},
+    {"id":{"name":"Util","path":"scripts/Util/Util.yy",},},
     {"id":{"name":"World","path":"scripts/World/World.yy",},},
     {"id":{"name":"spr_enemy_big","path":"sprites/spr_enemy_big/spr_enemy_big.yy",},},
     {"id":{"name":"spr_enemy","path":"sprites/spr_enemy/spr_enemy.yy",},},

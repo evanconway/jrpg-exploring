@@ -1,3 +1,5 @@
+game_set_speed(60, gamespeed_fps);
+
 res = {
 	width: 320,
 	height: 180,

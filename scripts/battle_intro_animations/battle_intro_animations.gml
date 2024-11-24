@@ -17,11 +17,11 @@ function battle_get_intro_flash_fade(battle_updateable) {
 		battle_updateable,
 		time: 0,
 		blackout_alpha: 0,
-		flash_cycle_time: 14,
+		flash_cycle_time: 233,
 		number_of_flash_cycles: 4,
 		draw_battle: false,
-		update: function() {
-			time += 1;
+		update: function(update_time) {
+			time += update_time;
 			var mod_flash = time % flash_cycle_time;
 			blackout_alpha = mod_flash < (flash_cycle_time / 2) ? 0.5 : 0;
 			if (time >= (flash_cycle_time * number_of_flash_cycles) - 1) {
@@ -29,25 +29,25 @@ function battle_get_intro_flash_fade(battle_updateable) {
 				update = fade_to_black;
 			}
 		},
-		fade_to_black: function() {
-			blackout_alpha += 0.012;
+		fade_to_black: function(update_time) {
+			blackout_alpha += 0.012 * ms_to_frame_mod(update_time);
 			if (blackout_alpha >= 1) {
 				blackout_alpha = 1;
 				draw_battle = true;
 				update = fade_from_black;
 			}
 		},
-		fade_from_black: function() {
-			blackout_alpha -= 0.012;
+		fade_from_black: function(update_time) {
+			blackout_alpha -= 0.012 * ms_to_frame_mod(update_time);
 			if (blackout_alpha <= 0) {
 				global.updateable = battle_updateable;
 			}
 		},
-		draw: function() {
-			if (!draw_battle) world_draw();
+		draw: function(update_time) {
+			if (!draw_battle) world_draw(update_time);
 		},
-		draw_gui: function() {
-			if (draw_battle) battle_updateable.draw_gui();
+		draw_gui: function(update_time) {
+			if (draw_battle) battle_updateable.draw_gui(update_time);
 			if (blackout_alpha > 0) {
 				draw_set_color(c_black);
 				draw_set_alpha(blackout_alpha);

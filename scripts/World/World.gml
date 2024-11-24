@@ -1,18 +1,18 @@
-function world_update() {
+function world_update(update_time) {
 	with (obj_world) {
-		if (variable_instance_exists(id, "update")) update();
+		if (variable_instance_exists(id, "update")) update(update_time);
 	}
 }
 
-function world_draw() {
+function world_draw(update_time) {
 	with (obj_world) {
-		if (variable_instance_exists(id, "draw")) draw();
+		if (variable_instance_exists(id, "draw")) draw(update_time);
 	}
 }
 
-function world_draw_gui() {
+function world_draw_gui(update_time) {
 	with (obj_world) {
-		if (variable_instance_exists(id, "draw_gui")) draw_gui();
+		if (variable_instance_exists(id, "draw_gui")) draw_gui(update_time);
 	}
 }
 

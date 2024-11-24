@@ -9,7 +9,7 @@ if (global.console_open) {
 }
 
 if (is_struct(global.updateable) && variable_struct_exists(global.updateable, "update")) {
-	global.updateable.update();
+	global.updateable.update(delta_time / 1000);
 }
 
 camera_set_view_size(view_camera[0], res.width, res.height);
