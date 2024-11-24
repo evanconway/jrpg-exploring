@@ -94,3 +94,5 @@ Let's try hacking that in next. Adding enemies also gives them an Id, which is j
 We got a basic attack in. I noticed that we may want a more consistent way of displaying messages so that we can easily use them in different situations. Maybe make them their own kind of updateable with an update and draw function. Similar to how we use battles right now. The attack we made can't be reused for attacks with different animations though. I'm not yet convinced that's a bad thing because we may want very different logic for different attacks. I just wanted to note it.
 
 Something that's bothering me is my reliance on frame count for timing things. I think I should go through and change all the updates so they use delta_time. Let's try and make messages easier to use and rework our update functions. Then I think we should finally add some sort of action select menu for battles.
+
+Realized that for attacking to work we need a "choose target" menu which I'll need to think through.
