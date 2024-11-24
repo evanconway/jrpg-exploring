@@ -48,6 +48,6 @@ global.console_events = {
 		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
 	},
 	battle_attack: function() {
-		battle_attack(0, 10);
+		battle_attack(0, 50);
 	},
 };

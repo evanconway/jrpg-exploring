@@ -60,8 +60,9 @@ function BattleEnemy(enemy_name="Test Enemy", health=100, enemy_sprite=spr_enemy
 	static get_width = function() {
 		return sprite_get_width(sprite);
 	};
+	enemy_alpha = 1; // just used for defeat animation for now
 	static draw = function(x, y) {
-		draw_set_alpha(1);
+		draw_set_alpha(enemy_alpha);
 		draw_sprite(sprite, 0, x, y);
 		draw_set_font(fnt_battle);
 		draw_set_valign(fa_middle);
@@ -69,33 +70,6 @@ function BattleEnemy(enemy_name="Test Enemy", health=100, enemy_sprite=spr_enemy
 		draw_set_color(c_lime);
 		draw_text(x, y, enemy_health);
 	};
-}
-
-function battle_enemy_add(name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
-	if (battle_inactive()) return;
-	var new_enemy = new BattleEnemy(name, health, enemy_sprite);
-	array_push(global.updateable.enemies, new_enemy);
-}
-
-/**
- * Use this function when an updateable dealing with battles has completed, and
- * the next step in the battle must be determined. Logic is executed here to 
- * determine what the next updateable should be.
- *
- * @param {Struct.Battle} battle Battle instance to return to.
- */
-function battle_return(battle) {
-	if (instanceof(battle) != "Battle") {
-		show_error("battle_return was given a non-battle argument", true);
-	}
-	global.updateable = battle;
-}
-
-/*
- * Begin a new battle.
- */
-function battle_start(get_intro_animation=battle_get_intro_default) {
-	global.updateable = get_intro_animation(new Battle());
 }
 
 function battle_draw_tdt(tdt) {
@@ -141,31 +115,101 @@ function battle_message(text) {
 	}
 }
 
-function battle_attack(enemy_id, damage) {
+function battle_enemy_add(name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
 	if (battle_inactive()) return;
-	var enemy_index = array_find_index(global.updateable.enemies, method({ enemy_id },function(e) {
+	var new_enemy = new BattleEnemy(name, health, enemy_sprite);
+	array_push(global.updateable.enemies, new_enemy);
+}
+
+function battle_get_enemy_index_by_id(enemy_id) {
+	if (battle_inactive()) return -1;
+	return array_find_index(global.updateable.enemies, method({ enemy_id },function(e) {
 		return e.enemy_id == enemy_id;
 	}));
-	var text_enemy_found = $"You attacked {global.updateable.enemies[enemy_index].name}.";
-	var text_enemy_not_found = "No enemy with the given enemy_id!";
+}
+
+function battle_enemy_defeat(battle, enemy_index) {
+	if (enemy_index < 0) {
+		battle_message($"No enemy with id {enemy_id}.");
+		return;
+	}
+	global.updateable = {
+		battle,
+		enemy_index,
+		tdt: battle_get_message_tdt($"{battle.enemies[enemy_index].name} was defeated!"),
+		update: function() {
+			if (!keyboard_check_pressed(vk_space)) return;
+			if (tag_decorated_text_get_typing_finished(tdt)) {
+				update = fade_enemy;
+			} else {
+				tag_decorated_text_advance(tdt);
+			}
+		},
+		fade_enemy: function() {
+			battle.enemies[enemy_index].enemy_alpha -= 0.015;
+			if (battle.enemies[enemy_index].enemy_alpha <= 0) {
+				battle.enemies = array_filter(battle.enemies, method({ enemy_index }, function(e, i) {
+					return i != enemy_index;
+				}));
+				battle_return(battle);
+			}
+		}, 
+		draw_gui: function() {
+			battle.draw_gui();
+			battle_draw_tdt(tdt);
+		},
+	};
+}
+
+/**
+ * Use this function when an updateable dealing with battles has completed, and
+ * the next step in the battle must be determined. Logic is executed here to 
+ * determine what the next updateable should be.
+ *
+ * @param {Struct.Battle} battle Battle instance to return to.
+ */
+function battle_return(battle) {
+	if (instanceof(battle) != "Battle") {
+		show_error("battle_return was given a non-battle argument", true);
+	}
+	var enemies = battle.enemies;
+	for (var i = 0; i < array_length(enemies); i++) {
+		if (enemies[i].enemy_health <= 0) {
+			battle_enemy_defeat(battle, i);
+			return;
+		}
+	}
+	global.updateable = battle;
+}
+
+/*
+ * Begin a new battle.
+ */
+function battle_start(get_intro_animation=battle_get_intro_default) {
+	global.updateable = get_intro_animation(new Battle());
+}
+
+function battle_attack(enemy_id, damage) {
+	if (battle_inactive()) return;
+	var enemy_index = battle_get_enemy_index_by_id(enemy_id);
+	if (enemy_index < 0) {
+		battle_message($"No enemy with the given enemy_id {enemy_id}!");
+		return;
+	}
 	global.updateable = {
 		battle: global.updateable,
 		enemy_index,
-		tdt: battle_get_message_tdt(enemy_index < 0 ? text_enemy_not_found : text_enemy_found),
+		tdt: battle_get_message_tdt($"You attacked {global.updateable.enemies[enemy_index].name}."),
 		draw_tdt: true,
 		fade_alpha: 0,
 		damage,
 		update: function() {
 			if (!keyboard_check_pressed(vk_space)) return;
 			if (tag_decorated_text_get_typing_finished(tdt)) {
-				if (enemy_index < 0) {
-					battle_return(battle);
-				} else {
-					fade_alpha = 0.7;
-					draw_tdt = false;
-					battle.enemies[enemy_index].enemy_health -= damage;
-					update = attack_animation;
-				}
+				fade_alpha = 0.7;
+				draw_tdt = false;
+				battle.enemies[enemy_index].enemy_health -= damage;
+				update = attack_animation;
 			} else {
 				tag_decorated_text_advance(tdt);
 			}
