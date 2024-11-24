@@ -162,6 +162,43 @@ function battle_enemy_defeat(battle, enemy_index) {
 	};
 }
 
+function BattleActionOption(text, on_select) constructor {
+	tdt = new TagDecoratedTextDefault(text, "f:fnt_battle dkgray");
+	tdt_highlight = new TagDecoratedTextDefault(text, "f:fnt_battle white");
+	is_highlighted = false;
+	static set_highlighted = function(highlighted) {
+		is_highlighted = highlighted;
+	};
+	on_choose = on_select;
+	static draw = function(x, y, update_time) {
+		draw_set_valign(fa_middle);
+		draw_set_halign(fa_center);
+		draw_set_alpha(1);
+		tag_decorated_text_draw(is_highlighted ? tdt_highlight : tdt, x, y, update_time);
+	}
+}
+
+/**
+ * Sets the given battle to an action menu where the player can choose options.
+ *
+ * @param {Struct.Battle} battle Battle instance to return to.
+ */
+function battle_action_menu(battle) {
+	if (instanceof(battle) != "Battle") {
+		show_error("battle_action_menu was given a non-battle argument", true);
+	}
+	
+	global.updateable = {
+		battle,
+		gap: 10, // in pixels
+		options: [
+			new BattleActionOption("Attack", function() {}),
+		],
+		draw_gui: function(update_time) {
+		}
+	};
+}
+
 /**
  * Use this function when an updateable dealing with battles has completed, and
  * the next step in the battle must be determined. Logic is executed here to 
