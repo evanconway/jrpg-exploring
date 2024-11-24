@@ -39,12 +39,15 @@ global.console_events = {
 		global.updateable = battle_get_intro_flash_fade(new Battle());
 	},
 	battle_enemy_add: function() {
-		battle_enemy_add();
+		battle_enemy_add("Medium Enemy");
 	},
 	battle_enemy_add_big: function() {
-		battle_enemy_add(100, spr_enemy_big);
+		battle_enemy_add("Big Enemy", 100, spr_enemy_big);
 	},
 	battle_message_test: function() {
 		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
+	},
+	battle_attack: function() {
+		battle_attack(0, 10);
 	},
 };

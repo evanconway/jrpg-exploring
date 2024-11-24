@@ -50,7 +50,8 @@ function battle_inactive() {
 /**
  * Get a new enemy instance for a battle.
  */
-function BattleEnemy(health=100, enemy_sprite=spr_enemy) constructor {
+function BattleEnemy(enemy_name="Test Enemy", health=100, enemy_sprite=spr_enemy) constructor {
+	name = enemy_name;
 	static unique_enemy_id = 0;
 	enemy_id = unique_enemy_id;
 	unique_enemy_id += 1;
@@ -65,9 +66,9 @@ function BattleEnemy(health=100, enemy_sprite=spr_enemy) constructor {
 	};
 }
 
-function battle_enemy_add(health=100, enemy_sprite=spr_enemy) {
+function battle_enemy_add(name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
 	if (battle_inactive()) return;
-	var new_enemy = new BattleEnemy(health, enemy_sprite);
+	var new_enemy = new BattleEnemy(name, health, enemy_sprite);
 	array_push(global.updateable.enemies, new_enemy);
 }
 
@@ -133,4 +134,62 @@ function battle_message(text) {
 			battle_draw_tdt(tdt);
 		},
 	}
+}
+
+function battle_attack(enemy_id, damage) {
+	if (battle_inactive()) return;
+	var enemy_index = array_find_index(global.updateable.enemies, method({ enemy_id },function(e) {
+		return e.enemy_id == enemy_id;
+	}));
+	var text_enemy_found = $"You attacked {global.updateable.enemies[enemy_index].name}.";
+	var text_enemy_not_found = "No enemy with the given enemy_id!";
+	global.updateable = {
+		battle: global.updateable,
+		enemy_index,
+		tdt: battle_get_message_tdt(enemy_index < 0 ? text_enemy_not_found : text_enemy_found),
+		draw_tdt: true,
+		fade_alpha: 0,
+		damage,
+		update: function() {
+			if (!keyboard_check_pressed(vk_space)) return;
+			if (tag_decorated_text_get_typing_finished(tdt)) {
+				if (enemy_index < 0) {
+					battle_return(battle);
+				} else {
+					fade_alpha = 0.7;
+					draw_tdt = false;
+					battle.enemies[enemy_index].enemy_health -= damage;
+					update = attack_animation;
+				}
+			} else {
+				tag_decorated_text_advance(tdt);
+			}
+		},
+		attack_animation: function() {
+			fade_alpha -= 0.015;
+			if (fade_alpha <= 0) {
+				fade_alpha = 0;
+				tdt = battle_get_message_tdt($"Dealt {damage} damage to {battle.enemies[enemy_index].name}.");
+				draw_tdt = true;
+				update = post_attack_message;
+			}
+		},
+		post_attack_message: function() {
+			if (!keyboard_check_pressed(vk_space)) return;
+			if (tag_decorated_text_get_typing_finished(tdt)) {
+				battle_return(battle);
+			} else {
+				tag_decorated_text_advance(tdt);
+			}
+		},
+		draw_gui: function() {
+			battle.draw_gui();
+			if (fade_alpha > 0) {
+				draw_set_color(c_white);
+				draw_set_alpha(fade_alpha);
+				draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+			}
+			if (draw_tdt) battle_draw_tdt(tdt);
+		},
+	};
 }
