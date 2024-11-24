@@ -82,3 +82,9 @@ Let's just get some thoughts down so we can reference them later:
 BATTLE FLOW
 
 A battle is merely an app state where the active updateable references a battle instance in some way. Presumeably we'll always invoke the battle draw function of that instance while this updateable is live but it's not a hard rule. We'll design battle updateables to always link back to the same instance. But that instance will immediately determine which updateable should be live next. The battle instance itself almost doesn't need to be an updateable.
+
+I played a few other jrpgs briefly and realized most of them don't allow you to skip text for battle moments. In fact you don't appear to have any control over it. It shows up at the pace it wants, and leaves when it wants. I'm not sure yet if we want to copy that behavior.
+
+I want to add attack animations next. This will force us to think through how to target enemies. I would like to have battles with multiple enemies of the same kind. I was considering copying the letter system Earthbound uses, where copies of the same kinds of enemies have A, B, C, etc. appended to their name. But maybe we can skip that if the indication of what enemy you're targeting is good enough. However, it occured to me that we'll probably play some sort of death animation immediately after an enemy health reaches 0. We need some way to track what enemy an attack is targetting, and right now the only thing I have is the index in the enemy array. But that won't work because enemies will be deleted from the array on death. So perhaps we just need to give enemies raw Ids. Let's just give them an increasing integer.
+
+Let's try hacking that in next. Adding enemies also gives them an Id, which is just an increasing integer. Attacks will target enemies by Id. We'll play some sort of death animation for enemies once the attack animation is complete if their health is 0 or lower.
