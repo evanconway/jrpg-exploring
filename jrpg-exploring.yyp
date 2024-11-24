@@ -32,7 +32,6 @@
     {"id":{"name":"obj_world","path":"objects/obj_world/obj_world.yy",},},
     {"id":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
     {"id":{"name":"rm_start","path":"rooms/rm_start/rm_start.yy",},},
-    {"id":{"name":"battle_enemies","path":"scripts/battle_enemies/battle_enemies.yy",},},
     {"id":{"name":"battle_intro_animations","path":"scripts/battle_intro_animations/battle_intro_animations.yy",},},
     {"id":{"name":"Battle","path":"scripts/Battle/Battle.yy",},},
     {"id":{"name":"console_events","path":"scripts/console_events/console_events.yy",},},
