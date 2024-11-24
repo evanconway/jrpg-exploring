@@ -91,11 +91,9 @@ function battle_get_message_tdt(text) {
  */
 function battle_message(text) {
 	if (battle_inactive()) return;
-	var battle = global.updateable;
-	var tdt = battle_get_message_tdt(text);
 	global.updateable = {
-		battle,
-		tdt,
+		battle: global.updateable,
+		tdt: battle_get_message_tdt(text),
 		update: function() {
 			if (!keyboard_check_pressed(vk_space)) return;
 			if (tag_decorated_text_get_typing_finished(tdt)) {
