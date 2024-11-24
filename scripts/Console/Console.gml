@@ -34,7 +34,7 @@ function console_update() {
 		var event_function = struct_get(global.console_events, global.console_text);
 		if (is_method(event_function)) event_function();
 		global.console_text = "";
-		global.console_open = false;
+		// global.console_open = false;
 	}
 	if (keyboard_check_pressed(vk_tab)) {
 		global.console_text += console_get_autocomplete(global.console_text);

@@ -2,12 +2,13 @@ if (keyboard_check_pressed(192)) {
 	global.console_open = !global.console_open;
 }
 
-if (global.console_open) console_update();
-else {
+if (global.console_open) {
+	console_update();
+} else {
 	// handle game input
 }
 
-if (!global.console_open && is_struct(global.updateable) && variable_struct_exists(global.updateable, "update")) {
+if (is_struct(global.updateable) && variable_struct_exists(global.updateable, "update")) {
 	global.updateable.update();
 }
 

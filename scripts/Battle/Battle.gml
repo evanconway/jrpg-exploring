@@ -1,24 +1,3 @@
-/**
- * Get a new enemy instance for a battle. Parameter object accepts the following fields:
- * health:number, sprite:sprite, 
- */
-function BattleEnemy(params={
-	health: 100,
-	sprite: spr_enemy,
-}) constructor {
-	enemy_health = 100;
-	sprite = spr_enemy;
-	if (struct_exists(params, "health")) enemy_health = params.health;
-	if (struct_exists(params, "sprite")) sprite = params.sprite;
-	static get_width = function() {
-		return sprite_get_width(sprite);
-	};
-	static draw = function(x, y) {
-		draw_set_alpha(1);
-		draw_sprite(sprite, 0, x, y);
-	};
-}
-
 function Battle() constructor {
 	enemies = [];
 	static update = function() {
@@ -62,6 +41,37 @@ function Battle() constructor {
 }
 
 /**
+ * Returns true if current global updateable is a battle instance.
+ */
+function battle_inactive() {
+	return instanceof(global.updateable) != "Battle";
+}
+
+/**
+ * Get a new enemy instance for a battle.
+ */
+function BattleEnemy(health=100, enemy_sprite=spr_enemy) constructor {
+	static unique_enemy_id = 0;
+	enemy_id = unique_enemy_id;
+	unique_enemy_id += 1;
+	enemy_health = health;
+	sprite = enemy_sprite;
+	static get_width = function() {
+		return sprite_get_width(sprite);
+	};
+	static draw = function(x, y) {
+		draw_set_alpha(1);
+		draw_sprite(sprite, 0, x, y);
+	};
+}
+
+function battle_enemy_add(health=100, enemy_sprite=spr_enemy) {
+	if (battle_inactive()) return;
+	var new_enemy = new BattleEnemy(health, enemy_sprite);
+	array_push(global.updateable.enemies, new_enemy);
+}
+
+/**
  * Use this function when an updateable dealing with battles has completed, and
  * the next step in the battle must be determined. Logic is executed here to 
  * determine what the next updateable should be.
@@ -75,16 +85,11 @@ function battle_return(battle) {
 	global.updateable = battle;
 }
 
-// not finished
+/*
+ * Begin a new battle.
+ */
 function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.updateable = get_intro_animation(new Battle());
-}
-
-/**
- * Returns true if current global updateable is a battle instance.
- */
-function battle_inactive() {
-	return instanceof(global.updateable) != "Battle";
 }
 
 function battle_draw_tdt(tdt) {
@@ -128,9 +133,4 @@ function battle_message(text) {
 			battle_draw_tdt(tdt);
 		},
 	}
-}
-
-function battle_enemy_add(enemy) {
-	if (battle_inactive()) return;
-	array_push(global.updateable.enemies, enemy);
 }
