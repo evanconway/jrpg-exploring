@@ -45,7 +45,8 @@ global.console_events = {
 		battle_enemy_add("Big Enemy", 100, spr_enemy_big);
 	},
 	battle_message_test: function() {
-		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
+		if (battle_inactive()) return;
+		battle_message(global.updateable, "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
 	},
 	battle_attack: function() {
 		battle_attack(0, 50);

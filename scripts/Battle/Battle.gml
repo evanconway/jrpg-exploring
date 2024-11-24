@@ -69,17 +69,7 @@ function BattleEnemy(enemy_name="Test Enemy", health=100, enemy_sprite=spr_enemy
 	};
 }
 
-function battle_draw_tdt(tdt, update_time) {
-	draw_set_valign(fa_middle);
-	draw_set_halign(fa_center);
-	draw_set_alpha(1);
-	draw_set_color(c_black);
-	var rect_height = tag_decorated_text_get_height(tdt) * 1.2;
-	draw_rectangle(0, 0, display_get_gui_width(), rect_height, false);
-	tag_decorated_text_draw(tdt, display_get_gui_width() / 2, rect_height / 2, update_time);
-}
-
-function battle_get_message_tdt(text) {
+function battle_tdt_get(text) {
 	var width = display_get_gui_width() * 0.8;
 	var height = display_get_gui_height() * 0.2;
 	var tdt = new TagDecoratedTextDefault(text, "f:fnt_battle t:80,1", width, height);
@@ -87,27 +77,44 @@ function battle_get_message_tdt(text) {
 	return tdt;
 }
 
+function battle_tdt_update(tdt, update_time, on_complete) {
+	tag_decorated_text_update(tdt, update_time);
+	if (!keyboard_check_pressed(vk_space)) return;
+	if (tag_decorated_text_get_typing_finished(tdt)) {
+		on_complete();
+	} else {
+		tag_decorated_text_advance(tdt);
+	}
+}
+
+function battle_tdt_draw(tdt, update_time) {
+	draw_set_valign(fa_middle);
+	draw_set_halign(fa_center);
+	draw_set_alpha(1);
+	draw_set_color(c_black);
+	var rect_height = tag_decorated_text_get_height(tdt) * 1.2;
+	draw_rectangle(0, 0, display_get_gui_width(), rect_height, false);
+	tag_decorated_text_draw_no_update(tdt, display_get_gui_width() / 2, rect_height / 2);
+}
+
 /**
  * Display the given text as a message during battle.
  *
+ * @param {Struct.Battle} battle
  * @param {String} text
  */
-function battle_message(text) {
-	if (battle_inactive()) return;
+function battle_message(battle, text) {
 	global.updateable = {
-		battle: global.updateable,
-		tdt: battle_get_message_tdt(text),
+		battle,
+		tdt: battle_tdt_get(text),
 		update: function(update_time) {
-			if (!keyboard_check_pressed(vk_space)) return;
-			if (tag_decorated_text_get_typing_finished(tdt)) {
+			battle_tdt_update(tdt, update_time, method({ battle }, function() {
 				battle_return(battle);
-			} else {
-				tag_decorated_text_advance(tdt);
-			}
+			}));
 		},
 		draw_gui: function(update_time) {
 			battle.draw_gui();
-			battle_draw_tdt(tdt, update_time);
+			battle_tdt_draw(tdt, update_time);
 		},
 	}
 }
@@ -127,20 +134,17 @@ function battle_get_enemy_index_by_id(enemy_id) {
 
 function battle_enemy_defeat(battle, enemy_index) {
 	if (enemy_index < 0) {
-		battle_message($"No enemy with id {enemy_id}.");
+		battle_message(battle, $"No enemy with id {enemy_id}.");
 		return;
 	}
 	global.updateable = {
 		battle,
 		enemy_index,
-		tdt: battle_get_message_tdt($"{battle.enemies[enemy_index].name} was defeated!"),
+		tdt: battle_tdt_get($"{battle.enemies[enemy_index].name} was defeated!"),
 		update: function(update_time) {
-			if (!keyboard_check_pressed(vk_space)) return;
-			if (tag_decorated_text_get_typing_finished(tdt)) {
-				update = fade_enemy;
-			} else {
-				tag_decorated_text_advance(tdt);
-			}
+			battle_tdt_update(tdt, update_time, method({ s: global.updateable }, function() {
+				s.update = s.fade_enemy;
+			}));
 		},
 		fade_enemy: function(update_time) {
 			battle.enemies[enemy_index].enemy_alpha -= 0.015 * ms_to_frame_mod(update_time);
@@ -152,8 +156,8 @@ function battle_enemy_defeat(battle, enemy_index) {
 			}
 		}, 
 		draw_gui: function(update_time) {
-			battle.draw_gui();
-			battle_draw_tdt(tdt, update_time);
+			battle.draw_gui(update_time);
+			battle_tdt_draw(tdt, update_time);
 		},
 	};
 }
@@ -190,44 +194,31 @@ function battle_attack(enemy_id, damage) {
 	if (battle_inactive()) return;
 	var enemy_index = battle_get_enemy_index_by_id(enemy_id);
 	if (enemy_index < 0) {
-		battle_message($"No enemy with the given enemy_id {enemy_id}!");
+		battle_message(global.updateable, $"No enemy with the given enemy_id {enemy_id}!");
 		return;
 	}
 	global.updateable = {
 		battle: global.updateable,
 		enemy_index,
-		tdt: battle_get_message_tdt($"You attacked {global.updateable.enemies[enemy_index].name}."),
-		draw_tdt: true,
+		tdt: battle_tdt_get($"You attacked {global.updateable.enemies[enemy_index].name}."),
 		fade_alpha: 0,
 		damage,
 		update: function(update_time) {
-			if (!keyboard_check_pressed(vk_space)) return;
-			if (tag_decorated_text_get_typing_finished(tdt)) {
-				fade_alpha = 0.7;
-				draw_tdt = false;
-				battle.enemies[enemy_index].enemy_health -= damage;
-				update = attack_animation;
-			} else {
-				tag_decorated_text_advance(tdt);
-			}
+			battle_tdt_update(tdt, update_time, method({ s: global.updateable }, function() {
+				s.fade_alpha = 0.7;
+				s.battle.enemies[s.enemy_index].enemy_health -= s.damage;
+				s.update = s.attack_animation;
+			}));
 		},
 		attack_animation: function(update_time) {
 			fade_alpha -= 0.015 * ms_to_frame_mod(update_time);
 			if (fade_alpha <= 0) {
 				fade_alpha = 0;
-				tdt = battle_get_message_tdt($"Dealt {damage} damage to {battle.enemies[enemy_index].name}.");
-				draw_tdt = true;
+				battle_message(battle, $"Dealt {damage} damage to {battle.enemies[enemy_index].name}.");
 				update = post_attack_message;
 			}
 		},
-		post_attack_message: function(update_time) {
-			if (!keyboard_check_pressed(vk_space)) return;
-			if (tag_decorated_text_get_typing_finished(tdt)) {
-				battle_return(battle);
-			} else {
-				tag_decorated_text_advance(tdt);
-			}
-		},
+		post_attack_message: function(update_time) {},
 		draw_gui: function(update_time) {
 			battle.draw_gui(update_time);
 			if (fade_alpha > 0) {
@@ -235,7 +226,7 @@ function battle_attack(enemy_id, damage) {
 				draw_set_alpha(fade_alpha);
 				draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
 			}
-			if (draw_tdt) battle_draw_tdt(tdt, update_time);
+			battle_tdt_draw(tdt, update_time);
 		},
 	};
 }
