@@ -96,3 +96,5 @@ We got a basic attack in. I noticed that we may want a more consistent way of di
 Something that's bothering me is my reliance on frame count for timing things. I think I should go through and change all the updates so they use delta_time. Let's try and make messages easier to use and rework our update functions. Then I think we should finally add some sort of action select menu for battles.
 
 Realized that for attacking to work we need a "choose target" menu which I'll need to think through.
+
+Making a note as I make this menu. It ended up being more convenient to design all the functions to they accept a battle object. However, there's only ever going to be one battle object, and that's the active battle object. Perhaps we should rework these later to only use that same object.

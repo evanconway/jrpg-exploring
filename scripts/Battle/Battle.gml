@@ -37,11 +37,15 @@ function Battle() constructor {
 	};
 }
 
+function is_battle(battle) {
+	return instanceof(battle) == "Battle";
+}
+
 /**
  * Returns true if current global updateable is a battle instance.
  */
 function battle_inactive() {
-	return instanceof(global.updateable) != "Battle";
+	return !is_battle(global.updateable);
 }
 
 /**
@@ -113,21 +117,19 @@ function battle_message(battle, text) {
 			}));
 		},
 		draw_gui: function(update_time) {
-			battle.draw_gui();
+			battle.draw_gui(update_time);
 			battle_tdt_draw(tdt, update_time);
 		},
 	}
 }
 
-function battle_enemy_add(name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
-	if (battle_inactive()) return;
+function battle_enemy_add(battle, name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
 	var new_enemy = new BattleEnemy(name, health, enemy_sprite);
-	array_push(global.updateable.enemies, new_enemy);
+	array_push(battle.enemies, new_enemy);
 }
 
-function battle_get_enemy_index_by_id(enemy_id) {
-	if (battle_inactive()) return -1;
-	return array_find_index(global.updateable.enemies, method({ enemy_id },function(e) {
+function battle_get_enemy_index_by_id(battle, enemy_id) {
+	return array_find_index(battle.enemies, method({ enemy_id },function(e) {
 		return e.enemy_id == enemy_id;
 	}));
 }
@@ -162,6 +164,76 @@ function battle_enemy_defeat(battle, enemy_index) {
 	};
 }
 
+/**
+ * Sets the battle in a mode where the player chooses an enemy to attack.
+ */
+function battle_attack_choose(battle) {
+	if (!is_battle(battle)) {
+		show_error("battle_attack_choose was given a non-battle argument", true);
+	}
+	if (array_length(battle.enemies) <= 0) {
+		show_error("battle_attack_choose cannot work in a battle with no enemies", true);
+	}
+	
+	var tdt = battle_tdt_get("Which enemy will you attack?");
+	tag_decorated_text_type_all_pages(tdt);
+	
+	enemy_options = array_map(battle.enemies, method(battle, function(enemy) {
+		return new BattleActionOption(enemy.name, function() {
+			battle_attack(battle, enemy.enemy_id, 30);
+		});
+	}));
+	
+	var option_gap = 10;
+	var options_height = enemy_options[0].get_height();
+	var options_width = enemy_options[0].get_width();
+	
+	for (var i = 1; i < array_length(enemy_options); i++) {
+		options_width += option_gap;
+		options_width += enemy_options[i].get_width();
+		options_height = max(options_height, enemy_options[i].get_height());
+	}
+	
+	global.updateable = {
+		battle,
+		tdt,
+		selected_enemy_index: 0,
+		option_gap,
+		options_width,
+		options_height,
+		enemy_options,
+		update: function(update_time) {
+			if (keyboard_check_pressed(vk_left)) selected_enemy_index -= 1;
+			if (keyboard_check_pressed(vk_right)) selected_enemy_index += 1;
+			selected_enemy_index = clamp(selected_enemy_index, 0, array_length(enemy_options) - 1);
+			for (var i = 0; i < array_length(enemy_options); i++) {
+				enemy_options[i].set_highlighted(i == selected_enemy_index);
+			}
+			if (keyboard_check_pressed(vk_space)) {
+				battle_attack(battle, battle.enemies[selected_enemy_index].enemy_id, 30);
+			}
+		},
+		draw_enemy_options: function(update_time) {
+			var draw_x = (display_get_gui_width() / 2) - (options_width / 2);
+			var draw_y = display_get_gui_height() - ((options_height * 1.2) / 2);
+			for (var i = 0; i < array_length(enemy_options); i++) {
+				draw_x += (enemy_options[i].get_width() / 2);
+				enemy_options[i].draw(draw_x, draw_y);
+				draw_x += (enemy_options[i].get_width() / 2);
+				draw_x += option_gap;
+			}
+		},
+		draw_gui: function(update_time) {
+			battle.draw_gui(update_time);
+			battle_tdt_draw(tdt, update_time);
+			draw_set_alpha(1);
+			draw_set_color(c_black);
+			draw_rectangle(0, display_get_gui_height(), display_get_gui_width(), display_get_gui_height() - options_height * 1.2, false);
+			draw_enemy_options(update_time);
+		},
+	};
+}
+
 function BattleActionOption(text, on_select) constructor {
 	tdt = new TagDecoratedTextDefault(text, "f:fnt_battle dkgray");
 	tdt_highlight = new TagDecoratedTextDefault(text, "f:fnt_battle white");
@@ -170,6 +242,12 @@ function BattleActionOption(text, on_select) constructor {
 		is_highlighted = highlighted;
 	};
 	on_choose = on_select;
+	static get_width = function() {
+		return tag_decorated_text_get_width(tdt);
+	};
+	static get_height = function() {
+		return tag_decorated_text_get_height(tdt);
+	};
 	static draw = function(x, y, update_time) {
 		draw_set_valign(fa_middle);
 		draw_set_halign(fa_center);
@@ -184,7 +262,7 @@ function BattleActionOption(text, on_select) constructor {
  * @param {Struct.Battle} battle Battle instance to return to.
  */
 function battle_action_menu(battle) {
-	if (instanceof(battle) != "Battle") {
+	if (!is_battle(battle)) {
 		show_error("battle_action_menu was given a non-battle argument", true);
 	}
 	
@@ -207,7 +285,7 @@ function battle_action_menu(battle) {
  * @param {Struct.Battle} battle Battle instance to return to.
  */
 function battle_return(battle) {
-	if (instanceof(battle) != "Battle") {
+	if (!is_battle(battle)) {
 		show_error("battle_return was given a non-battle argument", true);
 	}
 	var enemies = battle.enemies;
@@ -216,6 +294,10 @@ function battle_return(battle) {
 			battle_enemy_defeat(battle, i);
 			return;
 		}
+	}
+	if (array_length(battle.enemies) > 0) {
+		battle_attack_choose(battle);
+		return;
 	}
 	global.updateable = battle;
 }
@@ -227,17 +309,16 @@ function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.updateable = get_intro_animation(new Battle());
 }
 
-function battle_attack(enemy_id, damage) {
-	if (battle_inactive()) return;
-	var enemy_index = battle_get_enemy_index_by_id(enemy_id);
+function battle_attack(battle, enemy_id, damage) {
+	var enemy_index = battle_get_enemy_index_by_id(battle, enemy_id);
 	if (enemy_index < 0) {
-		battle_message(global.updateable, $"No enemy with the given enemy_id {enemy_id}!");
+		battle_message(battle, $"No enemy with the given enemy_id {enemy_id}!");
 		return;
 	}
 	global.updateable = {
-		battle: global.updateable,
+		battle,
 		enemy_index,
-		tdt: battle_tdt_get($"You attacked {global.updateable.enemies[enemy_index].name}."),
+		tdt: battle_tdt_get($"You attacked {battle.enemies[enemy_index].name}."),
 		fade_alpha: 0,
 		damage,
 		update: function(update_time) {
