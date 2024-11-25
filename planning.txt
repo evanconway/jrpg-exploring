@@ -97,8 +97,12 @@ Something that's bothering me is my reliance on frame count for timing things. I
 
 Realized that for attacking to work we need a "choose target" menu which I'll need to think through.
 
-Making a note as I make this menu. It ended up being more convenient to design all the functions to they accept a battle object. However, there's only ever going to be one battle object, and that's the active battle object. Perhaps we should rework these later to only use that same object.
+Making a note as I make this menu. It ended up being more convenient to design all the functions so they accept a battle object. However, there's only ever going to be one battle object, and that's the active battle object. Perhaps we should rework these later to only use that same object.
 
 Finally got something finished and working. My first observation is what I stated above. We should rework these functions that link to eachother so that there's only ever one globally referenced battle object. And all battle functions will reference that. It's messy trying to pass the object around. It's also not necessary since there will only ever be one battle happening at a time.
 
 Let's just focus on cleaning that up, then we'll assess.
+
+We've cleaned things up and the process for creating squences in battle feels clearer now. Though there are a still alot of things that will probably have to be reworked. A perfect example is the amount of damage dealt during an attack. There is zero logic there determining that, it's just a magic number right now.
+
+I was going to write out all the things I'm not sure about. Perhaps the best thing is to figure out a better sense of direction for this. There's only so much practical work that can be done when we don't know exactly what we're making.
