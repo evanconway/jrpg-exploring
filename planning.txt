@@ -106,3 +106,9 @@ Let's just focus on cleaning that up, then we'll assess.
 We've cleaned things up and the process for creating squences in battle feels clearer now. Though there are a still alot of things that will probably have to be reworked. A perfect example is the amount of damage dealt during an attack. There is zero logic there determining that, it's just a magic number right now.
 
 I was going to write out all the things I'm not sure about. Perhaps the best thing is to figure out a better sense of direction for this. There's only so much practical work that can be done when we don't know exactly what we're making.
+
+Perhaps it's time to mentally explore a vision. Something I've always thought would be cool is if you had different attacks that were more or less effective depending on the situation. It could be something extremely simple, like a rock/paper/scissors thing where once the player and enemy have queued up their actions, the attack that wins the rps battle is more effective. Or maybe outright nullifies the other attack. 
+
+I would like the strategy and effectiveness of certain actions to feel more concrete than in other rgps I've played. I do think we need to keep a fair amount of that "slot machine" feel that jrpgs have. The randomness of attacks hitting or missing, and the amount of damage they do, is fun.
+
+Maybe instead of exploring mechanics first we should explore the feel, and build mechanics that support it. More of a top down approach. Actually, given how my own mind seems to work. Perhaps I should try and think of a very specific scenario with a particular emotion, and build towards that. We could even think through it moment by moment. This is easier now since we have stronger control over things like cut-scenes. It may also be worth considering music first since it has such power over the emotion of a moment.
