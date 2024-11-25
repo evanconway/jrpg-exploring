@@ -1,9 +1,7 @@
 function Battle() constructor {
 	enemies = [];
 	draw_background = function () {
-		draw_set_color(c_gray);
-		draw_set_alpha(1);
-		draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+		colorout_gui(1, c_gray);
 	};
 	static draw_enemies = function() {
 		/*
@@ -107,9 +105,7 @@ function battle_message(text) {
 	global.updateable = {
 		tdt: battle_tdt_get(text),
 		update: function(update_time) {
-			battle_tdt_update(tdt, update_time, method(self, function() {
-				battle_return();
-			}));
+			battle_tdt_update(tdt, update_time, method(self, battle_return));
 		},
 		draw_gui: function(update_time) {
 			global.battle.draw_gui(update_time);
@@ -281,8 +277,36 @@ function battle_return() {
 		return;
 	}
 	global.updateable = {
+		tdt: battle_tdt_get("The battle is over."),
+		draw_battle: true,
+		blackout_alpha: 0,
+		update: function(update_time) {
+			battle_tdt_update(tdt, update_time, method(self, function() {
+				update = fade_out;
+			}));
+		},
+		fade_out: function(update_time) {
+			blackout_alpha += (update_time / 1200);
+			if (blackout_alpha >= 1) {
+				blackout_alpha = 1;
+				draw_battle = false;
+				update = fade_back;
+			}
+		},
+		fade_back: function(update_time) {
+			blackout_alpha -= (update_time / 1200);
+			if (blackout_alpha <= 0) {
+				global.updateable = global.world;
+			}
+		},
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			if (draw_battle) {
+				global.battle.draw_gui(update_time);
+				battle_tdt_draw(tdt, update_time);
+			} else {
+				world_draw(update_time);
+			}
+			colorout_gui(blackout_alpha);
 		},
 	};
 }
@@ -323,11 +347,7 @@ function battle_attack(enemy_id, damage) {
 		},
 		draw_gui: function(update_time) {
 			global.battle.draw_gui(update_time);
-			if (fade_alpha > 0) {
-				draw_set_color(c_white);
-				draw_set_alpha(fade_alpha);
-				draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
-			}
+			colorout_gui(fade_alpha, c_white);
 			battle_tdt_draw(tdt, update_time);
 		},
 	};

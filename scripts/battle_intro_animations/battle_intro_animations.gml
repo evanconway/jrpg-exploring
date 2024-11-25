@@ -41,11 +41,7 @@ function battle_get_intro_flash_fade() {
 		},
 		draw_gui: function(update_time) {
 			if (draw_battle) global.battle.draw_gui(update_time);
-			if (blackout_alpha > 0) {
-				draw_set_color(c_black);
-				draw_set_alpha(blackout_alpha);
-				draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
-			}
+			colorout_gui(blackout_alpha);
 		}
 	};
 }
