@@ -112,7 +112,7 @@ function battle_message(battle, text) {
 		battle,
 		tdt: battle_tdt_get(text),
 		update: function(update_time) {
-			battle_tdt_update(tdt, update_time, method({ battle }, function() {
+			battle_tdt_update(tdt, update_time, method(self, function() {
 				battle_return(battle);
 			}));
 		},
@@ -144,14 +144,14 @@ function battle_enemy_defeat(battle, enemy_index) {
 		enemy_index,
 		tdt: battle_tdt_get($"{battle.enemies[enemy_index].name} was defeated!"),
 		update: function(update_time) {
-			battle_tdt_update(tdt, update_time, method({ s: global.updateable }, function() {
-				s.update = s.fade_enemy;
+			battle_tdt_update(tdt, update_time, method(self, function() {
+				update = fade_enemy;
 			}));
 		},
 		fade_enemy: function(update_time) {
 			battle.enemies[enemy_index].enemy_alpha -= 0.015 * ms_to_frame_mod(update_time);
 			if (battle.enemies[enemy_index].enemy_alpha <= 0) {
-				battle.enemies = array_filter(battle.enemies, method({ enemy_index }, function(e, i) {
+				battle.enemies = array_filter(battle.enemies, method(self, function(e, i) {
 					return i != enemy_index;
 				}));
 				battle_return(battle);
@@ -178,10 +178,10 @@ function battle_attack_choose(battle) {
 	var tdt = battle_tdt_get("Which enemy will you attack?");
 	tag_decorated_text_type_all_pages(tdt);
 	
-	enemy_options = array_map(battle.enemies, method(battle, function(enemy) {
-		return new BattleActionOption(enemy.name, function() {
+	enemy_options = array_map(battle.enemies, method({ battle }, function(enemy) {
+		return new BattleActionOption(enemy.name, method({ battle, enemy }, function() {
 			battle_attack(battle, enemy.enemy_id, 30);
-		});
+		}));
 	}));
 	
 	var option_gap = 10;
@@ -210,7 +210,7 @@ function battle_attack_choose(battle) {
 				enemy_options[i].set_highlighted(i == selected_enemy_index);
 			}
 			if (keyboard_check_pressed(vk_space)) {
-				battle_attack(battle, battle.enemies[selected_enemy_index].enemy_id, 30);
+				enemy_options[selected_enemy_index].on_select();
 			}
 		},
 		draw_enemy_options: function(update_time) {
@@ -234,14 +234,14 @@ function battle_attack_choose(battle) {
 	};
 }
 
-function BattleActionOption(text, on_select) constructor {
+function BattleActionOption(text, on_select_callback) constructor {
 	tdt = new TagDecoratedTextDefault(text, "f:fnt_battle dkgray");
 	tdt_highlight = new TagDecoratedTextDefault(text, "f:fnt_battle white");
 	is_highlighted = false;
 	static set_highlighted = function(highlighted) {
 		is_highlighted = highlighted;
 	};
-	on_choose = on_select;
+	on_select = on_select_callback;
 	static get_width = function() {
 		return tag_decorated_text_get_width(tdt);
 	};
@@ -322,10 +322,10 @@ function battle_attack(battle, enemy_id, damage) {
 		fade_alpha: 0,
 		damage,
 		update: function(update_time) {
-			battle_tdt_update(tdt, update_time, method({ s: global.updateable }, function() {
-				s.fade_alpha = 0.7;
-				s.battle.enemies[s.enemy_index].enemy_health -= s.damage;
-				s.update = s.attack_animation;
+			battle_tdt_update(tdt, update_time, method(self, function() {
+				fade_alpha = 0.7;
+				battle.enemies[enemy_index].enemy_health -= damage;
+				update = attack_animation;
 			}));
 		},
 		attack_animation: function(update_time) {
