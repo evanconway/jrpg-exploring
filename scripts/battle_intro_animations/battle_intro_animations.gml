@@ -1,20 +1,13 @@
-/*
-	All battle intro animations must accept a battle struct as the first parameter. They must
-	set the global.updateable to this battle at the end of their animation.
-*/
+// All battle intro animations should link to some sort of updateable referencing the battle object.
 
-function battle_get_intro_default(battle_updateable) {
+function battle_get_intro_default() {
 	return {
-		battle_updateable,
-		update: function() {
-			global.updateable = battle_updateable;
-		}
-	};
+		update: battle_return,
+	}
 }
 
-function battle_get_intro_flash_fade(battle_updateable) {
+function battle_get_intro_flash_fade() {
 	return {
-		battle_updateable,
 		time: 0,
 		blackout_alpha: 0,
 		flash_cycle_time: 233,
@@ -40,14 +33,14 @@ function battle_get_intro_flash_fade(battle_updateable) {
 		fade_from_black: function(update_time) {
 			blackout_alpha -= 0.012 * ms_to_frame_mod(update_time);
 			if (blackout_alpha <= 0) {
-				global.updateable = battle_updateable;
+				battle_return();
 			}
 		},
 		draw: function(update_time) {
 			if (!draw_battle) world_draw(update_time);
 		},
 		draw_gui: function(update_time) {
-			if (draw_battle) battle_updateable.draw_gui(update_time);
+			if (draw_battle) global.battle.draw_gui(update_time);
 			if (blackout_alpha > 0) {
 				draw_set_color(c_black);
 				draw_set_alpha(blackout_alpha);

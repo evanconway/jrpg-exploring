@@ -37,16 +37,13 @@ function Battle() constructor {
 	};
 }
 
-function is_battle(battle) {
-	return instanceof(battle) == "Battle";
-}
-
-/**
- * Returns true if current global updateable is a battle instance.
- */
-function battle_inactive() {
-	return !is_battle(global.updateable);
-}
+/*
+The game will always contain a global reference to a battle. To actually perform a battle, the game will switch
+between updateables which reference this instance, modify it, and draw it. Since the instance doesn't do anything
+when the active updateable isn't referencing it, we'll probably just create a new one whenever a battle starts
+and not bother setting this to undefined.
+*/
+global.battle = new Battle();
 
 /**
  * Get a new enemy instance for a battle.
@@ -104,83 +101,78 @@ function battle_tdt_draw(tdt, update_time) {
 /**
  * Display the given text as a message during battle.
  *
- * @param {Struct.Battle} battle
  * @param {String} text
  */
-function battle_message(battle, text) {
+function battle_message(text) {
 	global.updateable = {
-		battle,
 		tdt: battle_tdt_get(text),
 		update: function(update_time) {
 			battle_tdt_update(tdt, update_time, method(self, function() {
-				battle_return(battle);
+				battle_return();
 			}));
 		},
 		draw_gui: function(update_time) {
-			battle.draw_gui(update_time);
+			global.battle.draw_gui(update_time);
 			battle_tdt_draw(tdt, update_time);
 		},
 	}
 }
 
-function battle_enemy_add(battle, name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
+function battle_enemy_add(name="Test Enemy", health=100, enemy_sprite=spr_enemy) {
 	var new_enemy = new BattleEnemy(name, health, enemy_sprite);
-	array_push(battle.enemies, new_enemy);
+	array_push(global.battle.enemies, new_enemy);
 }
 
-function battle_get_enemy_index_by_id(battle, enemy_id) {
-	return array_find_index(battle.enemies, method({ enemy_id },function(e) {
+function battle_get_enemy_index_by_id(enemy_id) {
+	return array_find_index(global.battle.enemies, method({ enemy_id },function(e) {
 		return e.enemy_id == enemy_id;
 	}));
 }
 
-function battle_enemy_defeat(battle, enemy_index) {
+function battle_enemy_defeat(enemy_index) {
 	if (enemy_index < 0) {
-		battle_message(battle, $"No enemy with id {enemy_id}.");
+		battle_message($"No enemy with id {enemy_id}.");
 		return;
 	}
 	global.updateable = {
-		battle,
 		enemy_index,
-		tdt: battle_tdt_get($"{battle.enemies[enemy_index].name} was defeated!"),
+		tdt: battle_tdt_get($"{global.battle.enemies[enemy_index].name} was defeated!"),
 		update: function(update_time) {
 			battle_tdt_update(tdt, update_time, method(self, function() {
+				global.battle.enemies[enemy_index].enemy_alpha = 0.5
 				update = fade_enemy;
 			}));
 		},
 		fade_enemy: function(update_time) {
-			battle.enemies[enemy_index].enemy_alpha -= 0.015 * ms_to_frame_mod(update_time);
-			if (battle.enemies[enemy_index].enemy_alpha <= 0) {
-				battle.enemies = array_filter(battle.enemies, method(self, function(e, i) {
+			global.battle.enemies[enemy_index].enemy_alpha -= 0.008 * ms_to_frame_mod(update_time);
+			if (global.battle.enemies[enemy_index].enemy_alpha <= 0) {
+				global.battle.enemies = array_filter(global.battle.enemies, method(self, function(e, i) {
 					return i != enemy_index;
 				}));
-				battle_return(battle);
+				battle_return();
 			}
 		}, 
 		draw_gui: function(update_time) {
-			battle.draw_gui(update_time);
+			global.battle.draw_gui(update_time);
 			battle_tdt_draw(tdt, update_time);
 		},
 	};
 }
 
 /**
- * Sets the battle in a mode where the player chooses an enemy to attack.
+ * Sets the battle to a mode where the player chooses an enemy to attack.
  */
-function battle_attack_choose(battle) {
-	if (!is_battle(battle)) {
-		show_error("battle_attack_choose was given a non-battle argument", true);
-	}
-	if (array_length(battle.enemies) <= 0) {
+function battle_attack_choose() {
+	if (array_length(global.battle.enemies) <= 0) {
 		show_error("battle_attack_choose cannot work in a battle with no enemies", true);
 	}
 	
 	var tdt = battle_tdt_get("Which enemy will you attack?");
 	tag_decorated_text_type_all_pages(tdt);
 	
-	enemy_options = array_map(battle.enemies, method({ battle }, function(enemy) {
-		return new BattleActionOption(enemy.name, method({ battle, enemy }, function() {
-			battle_attack(battle, enemy.enemy_id, 30);
+	enemy_options = array_map(global.battle.enemies, method({}, function(enemy) {
+		return new BattleActionOption(enemy.name, method({ enemy }, function() {
+			battle_attack(enemy.enemy_id, 30);
 		}));
 	}));
 	
@@ -195,7 +187,6 @@ function battle_attack_choose(battle) {
 	}
 	
 	global.updateable = {
-		battle,
 		tdt,
 		selected_enemy_index: 0,
 		option_gap,
@@ -224,7 +215,7 @@ function battle_attack_choose(battle) {
 			}
 		},
 		draw_gui: function(update_time) {
-			battle.draw_gui(update_time);
+			global.battle.draw_gui(update_time);
 			battle_tdt_draw(tdt, update_time);
 			draw_set_alpha(1);
 			draw_set_color(c_black);
@@ -257,22 +248,16 @@ function BattleActionOption(text, on_select_callback) constructor {
 }
 
 /**
- * Sets the given battle to an action menu where the player can choose options.
- *
- * @param {Struct.Battle} battle Battle instance to return to.
+ * Sets the battle to an action menu where the player can choose options.
  */
-function battle_action_menu(battle) {
-	if (!is_battle(battle)) {
-		show_error("battle_action_menu was given a non-battle argument", true);
-	}
-	
+function battle_action_menu() {	
 	global.updateable = {
-		battle,
 		gap: 10, // in pixels
 		options: [
 			new BattleActionOption("Attack", function() {}),
 		],
 		draw_gui: function(update_time) {
+			global.battle.draw_gui(update_time);
 		}
 	};
 }
@@ -282,49 +267,49 @@ function battle_action_menu(battle) {
  * the next step in the battle must be determined. Logic is executed here to 
  * determine what the next updateable should be.
  *
- * @param {Struct.Battle} battle Battle instance to return to.
  */
-function battle_return(battle) {
-	if (!is_battle(battle)) {
-		show_error("battle_return was given a non-battle argument", true);
-	}
-	var enemies = battle.enemies;
+function battle_return() {
+	var enemies = global.battle.enemies;
 	for (var i = 0; i < array_length(enemies); i++) {
 		if (enemies[i].enemy_health <= 0) {
-			battle_enemy_defeat(battle, i);
+			battle_enemy_defeat(i);
 			return;
 		}
 	}
-	if (array_length(battle.enemies) > 0) {
-		battle_attack_choose(battle);
+	if (array_length(global.battle.enemies) > 0) {
+		battle_attack_choose();
 		return;
 	}
-	global.updateable = battle;
+	global.updateable = {
+		draw_gui: function(update_time) {
+			global.battle.draw_gui(update_time);
+		},
+	};
 }
 
 /*
  * Begin a new battle.
  */
 function battle_start(get_intro_animation=battle_get_intro_default) {
-	global.updateable = get_intro_animation(new Battle());
+	global.battle = new Battle();
+	global.updateable = get_intro_animation();
 }
 
-function battle_attack(battle, enemy_id, damage) {
-	var enemy_index = battle_get_enemy_index_by_id(battle, enemy_id);
+function battle_attack(enemy_id, damage) {
+	var enemy_index = battle_get_enemy_index_by_id(enemy_id);
 	if (enemy_index < 0) {
-		battle_message(battle, $"No enemy with the given enemy_id {enemy_id}!");
+		battle_message($"No enemy with the given enemy_id {enemy_id}!");
 		return;
 	}
 	global.updateable = {
-		battle,
 		enemy_index,
-		tdt: battle_tdt_get($"You attacked {battle.enemies[enemy_index].name}."),
+		tdt: battle_tdt_get($"You attacked {global.battle.enemies[enemy_index].name}."),
 		fade_alpha: 0,
 		damage,
 		update: function(update_time) {
 			battle_tdt_update(tdt, update_time, method(self, function() {
 				fade_alpha = 0.7;
-				battle.enemies[enemy_index].enemy_health -= damage;
+				global.battle.enemies[enemy_index].enemy_health -= damage;
 				update = attack_animation;
 			}));
 		},
@@ -332,13 +317,12 @@ function battle_attack(battle, enemy_id, damage) {
 			fade_alpha -= 0.015 * ms_to_frame_mod(update_time);
 			if (fade_alpha <= 0) {
 				fade_alpha = 0;
-				battle_message(battle, $"Dealt {damage} damage to {battle.enemies[enemy_index].name}.");
-				update = post_attack_message;
+				battle_message($"Dealt {damage} damage to {global.battle.enemies[enemy_index].name}.");
+				update = function(update_time) {};
 			}
 		},
-		post_attack_message: function(update_time) {},
 		draw_gui: function(update_time) {
-			battle.draw_gui(update_time);
+			global.battle.draw_gui(update_time);
 			if (fade_alpha > 0) {
 				draw_set_color(c_white);
 				draw_set_alpha(fade_alpha);

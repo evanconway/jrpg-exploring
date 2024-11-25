@@ -36,32 +36,27 @@ global.console_events = {
 		battle_start();
 	},
 	battle_start_example: function() {
-		global.updateable = new Battle();
-		battle_enemy_add(global.updateable, "Medium Enemy");
-		battle_enemy_add(global.updateable, "Big Enemy", 100, spr_enemy_big);
-		battle_enemy_add(global.updateable, "Medium Enemy");
+		battle_start();
+		battle_enemy_add("Medium Enemy");
+		battle_enemy_add("Big Enemy", 100, spr_enemy_big);
+		battle_enemy_add("Medium Enemy");
 	},
 	battle_start_flash: function() {
 		battle_start(battle_get_intro_flash_fade);
 	},
 	battle_enemy_add: function() {
-		if (battle_inactive()) return;
-		battle_enemy_add(global.updateable, "Medium Enemy");
+		battle_enemy_add("Medium Enemy");
 	},
 	battle_enemy_add_big: function() {
-		if (battle_inactive()) return;
-		battle_enemy_add(global.updateable, "Big Enemy", 100, spr_enemy_big);
+		battle_enemy_add("Big Enemy", 100, spr_enemy_big);
 	},
 	battle_message_test: function() {
-		if (battle_inactive()) return;
-		battle_message(global.updateable, "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
+		battle_message("The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.");
 	},
 	battle_attack: function() {
-		if (battle_inactive()) return;
-		battle_attack(global.updateable, 0, 50);
+		battle_attack(0, 50);
 	},
 	battle_attack_choose: function() {
-		if (battle_inactive()) return;
-		battle_attack_choose(global.updateable);
+		battle_attack_choose();
 	},
 };
