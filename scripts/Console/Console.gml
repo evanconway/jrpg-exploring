@@ -28,7 +28,7 @@ function console_update() {
 	if (keyboard_check_pressed(ord("X"))) global.console_text += "x";
 	if (keyboard_check_pressed(ord("Y"))) global.console_text += "y";
 	if (keyboard_check_pressed(ord("Z"))) global.console_text += "z";
-	if (keyboard_check_pressed(189) && keyboard_check(vk_shift)) global.console_text += "_";
+	if ((keyboard_check_pressed(189) || keyboard_check_pressed(109)) && keyboard_check(vk_shift)) global.console_text += "_";
 	if (keyboard_check_pressed(vk_backspace) && global.console_text != "") global.console_text = string_copy(global.console_text, 0, string_length(global.console_text) - 1);
 	if (keyboard_check_pressed(vk_enter)) {
 		var event_function = struct_get(global.console_events, global.console_text);
