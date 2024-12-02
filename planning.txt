@@ -112,3 +112,13 @@ Perhaps it's time to mentally explore a vision. Something I've always thought wo
 I would like the strategy and effectiveness of certain actions to feel more concrete than in other rgps I've played. I do think we need to keep a fair amount of that "slot machine" feel that jrpgs have. The randomness of attacks hitting or missing, and the amount of damage they do, is fun.
 
 Maybe instead of exploring mechanics first we should explore the feel, and build mechanics that support it. More of a top down approach. Actually, given how my own mind seems to work. Perhaps I should try and think of a very specific scenario with a particular emotion, and build towards that. We could even think through it moment by moment. This is easier now since we have stronger control over things like cut-scenes. It may also be worth considering music first since it has such power over the emotion of a moment.
+
+1st of December, 2024
+
+No progress on mood or vibe to shoot for. Was thinking about starting battles randomly. Even if we don't commit to random starts, it's worth thinking through. We'll need zones that can start battles. My current instinct is to have the zones start battles based on player movement. Which means the zones will need to be aware of what the player is doing. I feel like it may be worth developing a complex event system, but we're no there yet. For now, let's redo the concept of world objects, and just custom code the world update loop just like we've done before. So for starters, we'll just have it update the player and battle start zones.
+
+Got something simple working. Realized the battle zone could simply make a chance check any time the player moves to start a battle. We just use a really low percentage to make sure battles don't drag on too much. Also hacked in a simple time minimum between battles to keep things from getting repetitive. However these values are locked to individual battle zone instances for now. They should probably be universal.
+
+Also quickly realized I'm not sure we should actually have truly random battle zones. It feels so interruptive. Would be worth exploring ideas like how Earthbound handles it. Though I don't want to have to draw that much. A generic sprite could work but it would have to be something that's very lore friendly. Needs thought.
+
+Since battles are just created objects, we can modify them when they start. We can do this in the battle zones. Could probably also define rewards here if needed. Otherwise that can be determined when battles are over.

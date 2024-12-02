@@ -1,5 +1,3 @@
-event_inherited();
-
 update = function(update_time) {
 	var vel_x = 0;
 	var vel_y = 0;
@@ -11,3 +9,8 @@ update = function(update_time) {
 	x += vel_x;
 	y += vel_y;
 };
+
+draw = function() {
+	draw_set_alpha(1);
+	draw_self();
+}

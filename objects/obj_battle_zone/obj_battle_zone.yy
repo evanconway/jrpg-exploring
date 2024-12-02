@@ -1,15 +1,16 @@
 {
   "$GMObject":"",
-  "%Name":"obj_world",
+  "%Name":"obj_battle_zone",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_world",
+  "name":"obj_battle_zone",
   "overriddenProperties":[],
   "parent":{
-    "name":"world",
-    "path":"folders/world.yy",
+    "name":"battle_zone",
+    "path":"folders/world/battle_zone.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -29,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_battle_zone",
+    "path":"sprites/spr_battle_zone/spr_battle_zone.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

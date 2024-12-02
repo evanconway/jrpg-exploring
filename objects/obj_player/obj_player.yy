@@ -8,13 +8,10 @@
   "name":"obj_player",
   "overriddenProperties":[],
   "parent":{
-    "name":"world",
-    "path":"folders/world.yy",
+    "name":"player",
+    "path":"folders/world/player.yy",
   },
-  "parentObjectId":{
-    "name":"obj_world",
-    "path":"objects/obj_world/obj_world.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

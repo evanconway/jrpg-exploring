@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"battle_zone",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"battle_zone",
+  "parent":{
+    "name":"battle_zone",
+    "path":"folders/world/battle_zone.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
