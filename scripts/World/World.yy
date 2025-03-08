@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"World",
   "parent":{
-    "name":"jrpg-exploring",
-    "path":"jrpg-exploring.yyp",
+    "name":"world",
+    "path":"folders/world.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

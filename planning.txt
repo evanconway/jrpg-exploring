@@ -149,3 +149,5 @@ Maybe I'm being too dramatic about the generic enemy asset thing, and it'd be fi
 Actually I think I've convinced myself. Let's do that. Being able to see the enemies in the overworld solves all the gameplay issues of random battle starts. And although the artistic work load is intimidating, maybe it'll be good art practice. And it'll allow more opportunities for expressiveness in the game.
 
 Just had a thought for how the transition from overworld enemy to slide-show battle could work. If the actual enemy sprite is some sort of black silhouette, on battle start it could expand into the entire black background, then the actual colored enemy sprite could fade into view. Might be a fun way to imply the transition to another world or something.
+
+Started messing around with adding a wandering enemy. But when the player defeats one of these overworld enemies in the slide show battle, it should be removed from the overworld. And I haven't thought this through yet. So it's time to plan out how battles will affect the overworld. 

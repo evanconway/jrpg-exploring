@@ -1,20 +1,19 @@
 {
   "$GMObject":"",
-  "%Name":"obj_battle_zone",
+  "%Name":"obj_world",
   "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":12,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_battle_zone",
+  "name":"obj_world",
   "overriddenProperties":[],
   "parent":{
-    "name":"battle_zone",
-    "path":"folders/world/battle_zone.yy",
+    "name":"world",
+    "path":"folders/world.yy",
   },
-  "parentObjectId":{
-    "name":"obj_world",
-    "path":"objects/obj_world/obj_world.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -32,10 +31,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_battle_zone",
-    "path":"sprites/spr_battle_zone/spr_battle_zone.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

@@ -1,3 +1,5 @@
+event_inherited();
+
 enum WANDERING_ENEMY_STATE {
 	WAITING,
 	MOVING
@@ -46,8 +48,9 @@ update = function(update_time) {
 		}
 	}
 	state_time -= 1;
+	
+	if (place_meeting(x, y, obj_player)) {
+		battle_start(battle_get_intro_flash_fade);
+		battle_enemy_add("bug", 40, spr_wandering_enemy);
+	}
 };
-
-draw = function(update_time) {
-	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.4);
-}
