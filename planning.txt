@@ -128,3 +128,22 @@ Since battles are just created objects, we can modify them when they start. We c
 Some thoughts about story and how we could possibly organize this. I feel like I've got a good instinct for nailing a mood or feeling. So perhaps I could try to start the story by imagining an initial scenario with a very specific emotion. This might work well for acts in general. Or maybe I could think of it as defining acts with specific story beats that hit a specific emotion. Instead of starting ultra small with just 1 moment, I'd like to hit enough that we could build a story from them. So maybe 3? That would follow with a traditional western story of beginning, middle, climax.
 
 I also want to make some notes about how I think stories work in games. A game is ultimately an interactive piece of software, so the user needs to have plenty of opportunities for interaction. However, in my opinion, the best stories are very strict. I don't like the idea of different endings, or different story beats the player can mess with. I think it would be valuable to view the story as something the player uncovers through play instead of something they are a part of. This is a tricky line to walk because obviously the player won't feel connected to the story if they can't change anything about it. I think it has to be a sort of illusion. Like a scavenger hunt for the missing pages of a book. You can find everything in your own way, and in the order you want, but the final story is the same result every time. This is a vague concept I'm not sure how to explain well. More of a feeling at the moment.
+
+
+8th of March, 2025
+
+Looking over notes after a long break from this. I'm not confident in a core game mechanic outside of regular attack options. I haven't even solved how I want battles to start. Been playing more bullet hells lately and got me thinking of different mechanics that battles could use. Though using bullets hells is such an obvious Undertale ripoff that I refuse to use it (for now anyway). I like the idea of introducing cards somehow. Perhaps each card is some kind of attack and you one per turn. Maybe you draw a new hand of 5-7 cards each turn? Maybe you only draw 1 card each turn? I dunno. Using cards is appealing because it feels like an easy collector and rare hunting mechanic. The card mechanics would have to be fairly simple though because I'm not confident I can code AI for a complex card game.
+
+Fighting Game mechanics are also really appealing. But I'm not sure it'd feel right in a top-down rpg style world. And again coding AI for something like that feels too difficult right now.
+
+Also, I truly believe my strengths are in the music and setting an interesting mood, not designing clever game mechanics. It's probably better to lean into that.
+
+I bet the game mechanics could stay fairly simple. Actually what's really stuck in my head is the random battle starts. I don't like it. I think it'll kill the mood of the game. Also when I play games with random battle starts it just stresses me out because I'm contstantly waiting for the sting of the battle start.
+
+But the problem with copying something like Earthbound is I have to make assets for all those enemies. I could just make a generic asset that represents all enemies, like a dark energy clould or something. But that feels lazy and wrong to me.
+
+The way Pokemon trainers work is a like a sort of middle ground. I'd still have to make assets for the trainers, but each trainer fights with different enemies, and reusing the assets for a trainer for different battles doesn't feel wrong to me. Though I was always annoyed at crossing the vision threshold for trainers.
+
+Maybe I'm being too dramatic about the generic enemy asset thing, and it'd be fine. Firstly perhaps I'm over estimating how much work it'll be to make overworld assets for enemeis. Second, maybe we could do something where we have shadowy representations for different types of enemies. Like a flying figure for flying enemies, and an insect shape for bug enemies. Doesn't have to be physical types like that, could be something more unique to this game.
+
+Actually I think I've convinced myself. Let's do that. Being able to see the enemies in the overworld solves all the gameplay issues of random battle starts. And although the artistic work load is intimidating, maybe it'll be good art practice. And it'll allow more opportunities for expressiveness in the game.
