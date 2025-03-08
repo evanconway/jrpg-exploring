@@ -32,6 +32,5 @@ update = function(update_time) {
 };
 
 draw = function(update_time) {
-	// not working as expected, had to use object draw event
-	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.3);
+	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, 0, c_white, 0.4);
 }
