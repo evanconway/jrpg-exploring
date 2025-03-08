@@ -6,14 +6,38 @@ global.world = {
 };
 
 function world_update(update_time) {
-	obj_battle_zone.catch_player_position();
-	obj_wandering_enemy.update(update_time);
-	obj_player.update(update_time);
-	obj_battle_zone.update(update_time);
+	with (obj_battle_zone) {
+		catch_player_position();
+	}
+	with (obj_wandering_enemy) {
+		update(update_time);
+	}
+	with (obj_player) {
+		update(update_time);
+	}
+	with (obj_battle_zone) {
+		update(update_time);
+	}
 }
 
 function world_draw(update_time) {
-	struct_foreach(global.world.objects, method({ update_time }, function(k, v) {
+	var drawn_instances = {};
+	
+	with (obj_battle_zone) {
+		draw(update_time);
+		drawn_instances[$ string(id)] = id;
+	}
+	with (obj_wandering_enemy) {
+		draw(update_time);
+		drawn_instances[$ string(id)] = id;
+	}
+	with (obj_player) {
+		draw(update_time);
+		drawn_instances[$ string(id)] = id;
+	}
+	
+	struct_foreach(global.world.objects, method({ update_time, drawn_instances }, function(k, v) {
+		if (struct_exists(drawn_instances, k)) return;
 		v.draw(update_time);
 	}));
 }

@@ -3,6 +3,9 @@ function Battle() constructor {
 	draw_background = function () {
 		colorout_gui(1, c_gray);
 	};
+	on_end = function() {
+		show_debug_message("battle over");
+	};
 	static draw_enemies = function() {
 		/*
 		We may want to change this in the future so that enemy location
@@ -297,6 +300,7 @@ function battle_return() {
 			blackout_alpha -= (update_time / 1200);
 			if (blackout_alpha <= 0) {
 				global.updateable = global.world;
+				global.battle.on_end();
 			}
 		},
 		draw_gui: function(update_time) {
@@ -317,6 +321,13 @@ function battle_return() {
 function battle_start(get_intro_animation=battle_get_intro_default) {
 	global.battle = new Battle();
 	global.updateable = get_intro_animation();
+}
+
+/**
+ * Set the on_end field of the current battle instance.
+ */
+function battle_on_end(on_end = function() {}) {
+	global.battle.on_end = on_end;
 }
 
 function battle_attack(enemy_id, damage) {
