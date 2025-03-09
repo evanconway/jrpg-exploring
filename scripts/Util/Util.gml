@@ -1,3 +1,15 @@
+enum DIRECTION {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+}
+
+function get_random_dir() {
+	var dirs = [DIRECTION.UP, DIRECTION.DOWN, DIRECTION.LEFT, DIRECTION.RIGHT];
+	return dirs[random(floor(array_length(dirs)))];
+}
+
 /**
  * Given the number of milliseconds since the last frame, returns the 
  * percentage of frame time passed as a real between 0 and 1.
