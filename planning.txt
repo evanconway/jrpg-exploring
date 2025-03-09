@@ -157,3 +157,9 @@ We were able to pretty easily add an on_end function to battles that deletes the
 Back to handling battle starts, I'm further convinced of using over world enemies. I can feel ideas coming naturally for how battles would start when approaching overworld enemies, and what they might look like. I think it's good to follow game mechanics that inspire me creatively. I shouldn't be so scared of the work load. It'll end with a better game.
 
 Just realized we definitely need a way to update all game state mid-battle. What if we want the player to gain a new ability mid-battle? Or gain a stat boost? Could be a part of some plot point. Again I think we can put this off for now, but we'll need it.
+
+I definitely don't know where to go with this. I only have vague ideas and visions. There's no character or story I have in mind. Last time we worked on this I wrote about trying to hit an emotional mood and create specific moments, then build from that.
+
+Noting I like the idea of environments that animate in time with music. This might be easier than I expected depending on how complex the animations are.
+
+Maybe we should just try creating some enemies first. Could even go as far as to create music and art. Really try and nail the vibe we can achieve.
