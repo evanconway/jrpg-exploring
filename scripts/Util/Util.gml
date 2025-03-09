@@ -11,11 +11,17 @@ function get_random_dir() {
 }
 
 /**
- * Given the number of milliseconds since the last frame, returns the 
- * percentage of frame time passed as a real between 0 and 1.
+ * Given a number value and frame time in milliseconds, return that value 
+ * adjusted for the given frame rate. For example, at 60fps if a value of
+ * 1 and a time of 14 milliseconds is given: the returned value will be 
+ * 0.84.
+ *
+ * @param {real} value the number value to convert
+ * @param {real} time time in milliseconds
  */
-function ms_to_frame_mod(time_microseconds=(delta_time / 1000)) {
-	return time_microseconds / (1000 / 60);
+function frame_value_ms_convert(value, time) {
+	var frame_mod = time / (1000 / game_get_speed(gamespeed_fps));
+	return value * frame_mod;
 }
 
 /**

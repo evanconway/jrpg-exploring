@@ -6,7 +6,7 @@ function battle_get_intro_default() {
 	}
 }
 
-function battle_get_intro_flash_fade() {
+function battle_get_intro_flicker_fade() {
 	return {
 		time: 0,
 		blackout_alpha: 0,
@@ -23,7 +23,7 @@ function battle_get_intro_flash_fade() {
 			}
 		},
 		fade_to_black: function(update_time) {
-			blackout_alpha += 0.012 * ms_to_frame_mod(update_time);
+			blackout_alpha += frame_value_ms_convert(0.012, update_time);
 			if (blackout_alpha >= 1) {
 				blackout_alpha = 1;
 				draw_battle = true;
@@ -31,7 +31,7 @@ function battle_get_intro_flash_fade() {
 			}
 		},
 		fade_from_black: function(update_time) {
-			blackout_alpha -= 0.012 * ms_to_frame_mod(update_time);
+			blackout_alpha -= frame_value_ms_convert(0.012, update_time);
 			if (blackout_alpha <= 0) {
 				battle_return();
 			}
@@ -42,6 +42,43 @@ function battle_get_intro_flash_fade() {
 		draw_gui: function(update_time) {
 			if (draw_battle) global.battle.draw_gui(update_time);
 			colorout_gui(blackout_alpha);
+		}
+	};
+}
+
+function battle_get_intro_flash_fade() {
+	return {
+		time: 0,
+		alpha: 1,
+		colorout_color: c_white,
+		draw_battle: false,
+		update: function(update_time) {
+			alpha -= frame_value_ms_convert(0.02, update_time);
+			if (alpha <= 0) {
+				update = fade_to_black;
+				colorout_color = c_black;
+			}
+		},
+		fade_to_black: function(update_time) {
+			alpha += frame_value_ms_convert(0.012, update_time);
+			if (alpha >= 1) {
+				alpha = 1;
+				draw_battle = true;
+				update = fade_from_black;
+			}
+		},
+		fade_from_black: function(update_time) {
+			alpha -= frame_value_ms_convert(0.012, update_time);
+			if (alpha <= 0) {
+				battle_return();
+			}
+		},
+		draw: function(update_time) {
+			if (!draw_battle) world_draw(0);
+		},
+		draw_gui: function(update_time) {
+			if (draw_battle) global.battle.draw_gui(update_time);
+			colorout_gui(alpha, colorout_color);
 		}
 	};
 }

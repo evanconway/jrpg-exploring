@@ -2,7 +2,7 @@ event_inherited();
 
 start_chance = 0.01;
 player_position = { x: 0, y: 0 };
-battle_start_animation = battle_get_intro_flash_fade;
+battle_start_animation = battle_get_intro_flicker_fade;
 battle_start_actions = function() {
 	battle_enemy_add("Medium Enemy");
 };

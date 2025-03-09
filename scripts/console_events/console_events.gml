@@ -42,7 +42,7 @@ global.console_events = {
 		battle_enemy_add("Medium Enemy");
 	},
 	battle_start_flash: function() {
-		battle_start(battle_get_intro_flash_fade);
+		battle_start(battle_get_intro_flicker_fade);
 	},
 	battle_enemy_add: function() {
 		battle_enemy_add("Medium Enemy");

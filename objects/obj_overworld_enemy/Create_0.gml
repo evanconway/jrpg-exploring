@@ -50,7 +50,7 @@ update = function(update_time) {
 	state_time -= 1;
 	
 	if (place_meeting(x, y, obj_player)) {
-		battle_start(battle_get_intro_flash_fade);
+		battle_start(battle_get_intro_flicker_fade);
 		battle_enemy_add("bug", 40, spr_overworld_enemy);
 		battle_on_end(function() {
 			instance_destroy(id);

@@ -9,7 +9,8 @@ if (global.console_open) {
 }
 
 if (is_struct(global.updateable) && variable_struct_exists(global.updateable, "update")) {
-	global.updateable.update(delta_time / 1000);
+	var delta_time_milliseconds = delta_time / 1000;
+	global.updateable.update(delta_time_milliseconds);
 }
 
 camera_set_view_size(view_camera[0], res.width, res.height);

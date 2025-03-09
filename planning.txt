@@ -170,3 +170,5 @@ Maybe we should just try creating some enemies first. Could even go as far as to
 Noticed there might be a flaw in the way I handle game logic right now. I have this global updateable object that's changed to a different object by game logic. But when this change happens, that new updateable doesn't execute logic until the next frame. So if there was logic for an updateable that needed to be executed the frame it changed, we'd have to do extra work. Lucily due to how drawing events work, the new updateable will be drawn the frame it's changed. Need to keep aware of this just in case.
 
 The after image effect I added to the broken soul is terrible. Well, not terrible, but the shape is wrong. It looks way too vertical and stiff. I wonder if the base sprite should just be a ball and I somehow create the fake flames on top of it as part of the image.
+
+I don't like the way this enemy looks. But I feel like I should finish it for the sake of it. Next is a unique start animation.

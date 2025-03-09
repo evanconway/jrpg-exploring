@@ -3,7 +3,7 @@ event_inherited();
 update = function(update_time) {
 	var vel_x = 0;
 	var vel_y = 0;
-	var base_vel = 1 * ms_to_frame_mod(update_time);
+	var base_vel = frame_value_ms_convert(1, update_time);
 	if (keyboard_check(vk_left)) vel_x -= base_vel;
 	if (keyboard_check(vk_right)) vel_x += base_vel;
 	if (keyboard_check(vk_up)) vel_y -= base_vel;
