@@ -153,3 +153,7 @@ Just had a thought for how the transition from overworld enemy to slide-show bat
 Started messing around with adding a wandering enemy. But when the player defeats one of these overworld enemies in the slide show battle, it should be removed from the overworld. And I haven't thought this through yet. So it's time to plan out how battles will affect the overworld. 
 
 We were able to pretty easily add an on_end function to battles that deletes the overworld enemy instance. If we need game state updated mid-battle, I'm pretty sure we can just add more on_whatever functions to battle that get triggered on certain conditions. My gut tells me some sort of event system may be necessary in the future.
+
+Back to handling battle starts, I'm further convinced of using over world enemies. I can feel ideas coming naturally for how battles would start when approaching overworld enemies, and what they might look like. I think it's good to follow game mechanics that inspire me creatively. I shouldn't be so scared of the work load. It'll end with a better game.
+
+Just realized we definitely need a way to update all game state mid-battle. What if we want the player to gain a new ability mid-battle? Or gain a stat boost? Could be a part of some plot point. Again I think we can put this off for now, but we'll need it.
