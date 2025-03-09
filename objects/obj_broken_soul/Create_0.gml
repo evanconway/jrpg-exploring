@@ -7,7 +7,11 @@ state = 0;
 state_time = 1000;
 move_speed_max = 0.5;
 move_speed = 0;
-move_acc = 0.01
+move_acc = 0.01;
+
+after_images = [];
+after_image_alpha_diff = 0.25;
+after_image_fade_rate = 0.03;
 
 move = function(update_time) {
 	var change_dist = move_speed * ms_to_frame_mod(update_time);
@@ -79,7 +83,20 @@ get_face_index = function() {
 	return 0;
 };
 
-draw = function() {
+draw = function() {	
+	after_images = array_filter(after_images, function(img) {
+		return img.alpha > 0;
+	});
+	
+	if (array_length(after_images) <= 0 || (1 - after_images[0].alpha >= after_image_alpha_diff)) {
+		array_insert(after_images, 0, { alpha: 1, index: image_index, x, y });
+	}
+	
+	array_foreach(after_images, function(img) {
+		draw_sprite_ext(spr_broken_soul_body, img.index, img.x, img.y, 1, 1, 0, c_white, img.alpha);
+		img.alpha -= after_image_fade_rate;
+	});
+	
 	draw_set_alpha(1);
 	draw_self();
 	draw_sprite(spr_broken_soul_face, get_face_index(), x, y);

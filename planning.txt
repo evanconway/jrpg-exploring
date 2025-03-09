@@ -163,3 +163,8 @@ I definitely don't know where to go with this. I only have vague ideas and visio
 Noting I like the idea of environments that animate in time with music. This might be easier than I expected depending on how complex the animations are.
 
 Maybe we should just try creating some enemies first. Could even go as far as to create music and art. Really try and nail the vibe we can achieve.
+
+
+9th of March, 2025
+
+Noticed there might be a flaw in the way I handle game logic right now. I have this global updateable object that's changed to a different object by game logic. But when this change happens, that new updateable doesn't execute logic until the next frame. So if there was logic for an updateable that needed to be executed the frame it changed, we'd have to do extra work. Lucily due to how drawing events work, the new updateable will be drawn the frame it's changed. Need to keep aware of this just in case.
