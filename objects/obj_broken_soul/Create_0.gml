@@ -1,11 +1,9 @@
 event_inherited();
 
-
-
 dir = get_random_dir();
 state = 0;
 state_time = 1000;
-move_speed_max = 0.5;
+move_speed_max = 0.2;
 move_speed = 0;
 move_acc = 0.01;
 
@@ -83,7 +81,7 @@ get_face_index = function() {
 	return 0;
 };
 
-draw = function() {	
+draw_after_images = function() {
 	after_images = array_filter(after_images, function(img) {
 		return img.alpha > 0;
 	});
@@ -96,7 +94,58 @@ draw = function() {
 		draw_sprite_ext(spr_broken_soul_body, img.index, img.x, img.y, 1, 1, 0, c_white, img.alpha);
 		img.alpha -= after_image_fade_rate;
 	});
+};
+
+flames = [];
+flame_decay_rate = 0.02;
+flame_rise_rate = 0.05;
+flame_count = 30;
+add_flame = function() {
+	var top = sprite_get_bbox_top(sprite_index);
+	array_push(flames, {
+		x_on_create: x,
+		y_on_create: y,
+		index: irandom_range(0, image_number),
+		x: x + irandom_range(sprite_get_bbox_left(sprite_index), sprite_get_bbox_right(sprite_index)),
+		y: y + top + irandom_range(-3, 3),
+		alpha: random_range(1, 3),
+	});
+};
+
+// get count of flames that are still close to body, ignore far away flames
+get_flame_count = function() {
+	var result = 0;
+	for (var i = 0; i < array_length(flames); i++) {
+		var f = flames[i];
+		if (point_distance(x, y, f.x_on_create, f.y_on_create) <= 5) {
+			result += 1;
+		}
+	}
+	return result;
+};
+
+while (array_length(flames) < flame_count) {
+	add_flame();
+}
+
+draw_flames = function() {
+	while (get_flame_count() < flame_count) {
+		add_flame();
+	}
 	
+	array_foreach(flames, function(f) {
+		draw_sprite_ext(spr_broken_soul_flame, f.index, f.x, f.y, 1, 1, 0, c_white, f.alpha);
+		f.alpha -= flame_decay_rate;
+		f.y -= flame_rise_rate;
+	})
+	
+	flames = array_filter(flames, function(f) {
+		return f.alpha > 0;
+	});
+};
+
+draw = function() {	
+	draw_flames();
 	draw_set_alpha(1);
 	draw_self();
 	draw_sprite(spr_broken_soul_face, get_face_index(), x, y);

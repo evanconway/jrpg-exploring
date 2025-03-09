@@ -53,6 +53,7 @@
     {"id":{"name":"spr_battle_zone","path":"sprites/spr_battle_zone/spr_battle_zone.yy",},},
     {"id":{"name":"spr_broken_soul_body","path":"sprites/spr_broken_soul_body/spr_broken_soul_body.yy",},},
     {"id":{"name":"spr_broken_soul_face","path":"sprites/spr_broken_soul_face/spr_broken_soul_face.yy",},},
+    {"id":{"name":"spr_broken_soul_flame","path":"sprites/spr_broken_soul_flame/spr_broken_soul_flame.yy",},},
     {"id":{"name":"spr_enemy_big","path":"sprites/spr_enemy_big/spr_enemy_big.yy",},},
     {"id":{"name":"spr_enemy","path":"sprites/spr_enemy/spr_enemy.yy",},},
     {"id":{"name":"spr_overworld_enemy","path":"sprites/spr_overworld_enemy/spr_overworld_enemy.yy",},},

@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"spr_broken_soul_face",
   "bboxMode":0,
-  "bbox_bottom":33,
+  "bbox_bottom":13,
   "bbox_left":0,
   "bbox_right":19,
   "bbox_top":0,
@@ -19,7 +19,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":40,
+  "height":20,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"4322660d-f812-4724-9064-99d8e14a56e3","blendMode":0,"displayName":"default","isLocked":false,"name":"4322660d-f812-4724-9064-99d8e14a56e3","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
