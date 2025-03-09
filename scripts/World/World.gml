@@ -9,7 +9,7 @@ function world_update(update_time) {
 	with (obj_battle_zone) {
 		catch_player_position();
 	}
-	with (obj_wandering_enemy) {
+	with (obj_overworld_enemy) {
 		update(update_time);
 	}
 	with (obj_player) {
@@ -27,7 +27,7 @@ function world_draw(update_time) {
 		draw(update_time);
 		drawn_instances[$ string(id)] = id;
 	}
-	with (obj_wandering_enemy) {
+	with (obj_overworld_enemy) {
 		draw(update_time);
 		drawn_instances[$ string(id)] = id;
 	}

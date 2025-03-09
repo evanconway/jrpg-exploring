@@ -1,6 +1,6 @@
 {
   "$GMSprite":"",
-  "%Name":"spr_wandering_enemy",
+  "%Name":"spr_overworld_enemy",
   "bboxMode":0,
   "bbox_bottom":11,
   "bbox_left":0,
@@ -21,19 +21,19 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"f9d3cb50-b5ac-4c23-9343-15ad2a3df429","blendMode":0,"displayName":"default","isLocked":false,"name":"f9d3cb50-b5ac-4c23-9343-15ad2a3df429","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_wandering_enemy",
+  "name":"spr_overworld_enemy",
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"wandering_enemy",
-    "path":"folders/world/wandering_enemy.yy",
+    "name":"overworld_enemy",
+    "path":"folders/world/overworld_enemy.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"",
-    "%Name":"spr_wandering_enemy",
+    "%Name":"spr_overworld_enemy",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -57,7 +57,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_wandering_enemy",
+    "name":"spr_overworld_enemy",
     "playback":1,
     "playbackSpeed":30.0,
     "playbackSpeedType":0,
@@ -69,7 +69,7 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f4232e37-ff35-45e7-a058-3fe18d90e341","path":"sprites/spr_wandering_enemy/spr_wandering_enemy.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f4232e37-ff35-45e7-a058-3fe18d90e341","path":"sprites/spr_overworld_enemy/spr_overworld_enemy.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"480af493-23d7-4a38-bfb1-0a94684c7a06","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],

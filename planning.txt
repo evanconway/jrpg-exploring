@@ -151,3 +151,5 @@ Actually I think I've convinced myself. Let's do that. Being able to see the ene
 Just had a thought for how the transition from overworld enemy to slide-show battle could work. If the actual enemy sprite is some sort of black silhouette, on battle start it could expand into the entire black background, then the actual colored enemy sprite could fade into view. Might be a fun way to imply the transition to another world or something.
 
 Started messing around with adding a wandering enemy. But when the player defeats one of these overworld enemies in the slide show battle, it should be removed from the overworld. And I haven't thought this through yet. So it's time to plan out how battles will affect the overworld. 
+
+We were able to pretty easily add an on_end function to battles that deletes the overworld enemy instance. If we need game state updated mid-battle, I'm pretty sure we can just add more on_whatever functions to battle that get triggered on certain conditions. My gut tells me some sort of event system may be necessary in the future.

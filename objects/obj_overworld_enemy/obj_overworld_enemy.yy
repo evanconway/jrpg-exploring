@@ -1,15 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_wandering_enemy",
+  "%Name":"obj_overworld_enemy",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_wandering_enemy",
+  "name":"obj_overworld_enemy",
   "overriddenProperties":[],
   "parent":{
-    "name":"wandering_enemy",
-    "path":"folders/world/wandering_enemy.yy",
+    "name":"overworld_enemy",
+    "path":"folders/world/overworld_enemy.yy",
   },
   "parentObjectId":{
     "name":"obj_world",
@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_wandering_enemy",
-    "path":"sprites/spr_wandering_enemy/spr_wandering_enemy.yy",
+    "name":"spr_overworld_enemy",
+    "path":"sprites/spr_overworld_enemy/spr_overworld_enemy.yy",
   },
   "spriteMaskId":null,
   "visible":true,
