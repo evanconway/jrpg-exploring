@@ -174,3 +174,7 @@ The after image effect I added to the broken soul is terrible. Well, not terribl
 I don't like the way this enemy looks. But I feel like I should finish it for the sake of it. Next is a unique start animation.
 
 Started drawing the battle sprite for this enemy, but I want the battle to start with a fade to black then it's face to fade in. This has me thinking more about how we customize drawing things in battles. It occured to me we could customize the draw functions of the battle object. We just provide custom values for draw_enemies and draw_background. So for example, to have this face fade in, I could setup the intro animation to draw the face fading in, then just use the logic for the last part of that for the draw_enemies logic.
+
+The custom draw_enemies function idea might be a bust. I forgot that we had a special fadout animation handled for enemies, which relies on the enemy objects. We're also displaying health that way. I doubt we'll keep that but it's still another thing wrecked whenever we change the draw enemies function. Adding a draw_enemies_active variable gave us the flexibility to let the face fade in.
+
+However I still like the idea of being able to overwrite the draw_enemies and draw_background functions to determine how battles start. Maybe I should write a bunch of functions that make it easy to draw specific enemies so it's easier to recreate basic enemy drawing logic.
