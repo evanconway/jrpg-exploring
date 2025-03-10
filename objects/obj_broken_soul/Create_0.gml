@@ -89,7 +89,7 @@ battle_intro = function() {
 			alpha += value_cfr(0.01, update_time);
 			if (alpha >= 1) {
 				global.battle.draw_enemies_active = true;
-				battle_return();
+				battle_message("A Broken Soul appears before you.");
 			}
 		},
 		draw: function(update_time) {

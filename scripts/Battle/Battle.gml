@@ -318,7 +318,7 @@ function battle_return() {
 				global.battle.draw_gui(update_time);
 				battle_tdt_draw(tdt, update_time);
 			} else {
-				world_draw(update_time);
+				world_draw(0);
 			}
 			colorout_gui(blackout_alpha);
 		},
@@ -349,12 +349,14 @@ function battle_attack(enemy_id, damage) {
 	global.updateable = {
 		enemy_index,
 		tdt: battle_tdt_get($"You attacked {global.battle.enemies[enemy_index].name}."),
+		display_tdt: true,
 		fade_alpha: 0,
 		damage,
 		update: function(update_time) {
 			battle_tdt_update(tdt, update_time, method(self, function() {
 				fade_alpha = 0.7;
 				global.battle.enemies[enemy_index].enemy_health -= damage;
+				display_tdt = false;
 				update = attack_animation;
 			}));
 		},
@@ -363,13 +365,14 @@ function battle_attack(enemy_id, damage) {
 			if (fade_alpha <= 0) {
 				fade_alpha = 0;
 				battle_message($"Dealt {damage} damage to {global.battle.enemies[enemy_index].name}.");
-				update = function(update_time) {};
 			}
 		},
 		draw_gui: function(update_time) {
 			global.battle.draw_gui(update_time);
 			colorout_gui(fade_alpha, c_white);
-			battle_tdt_draw(tdt, update_time);
+			if (display_tdt) {
+				battle_tdt_draw(tdt, update_time);
+			}
 		},
 	};
 }

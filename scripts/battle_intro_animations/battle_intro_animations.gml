@@ -37,7 +37,7 @@ function battle_get_intro_flicker_fade() {
 			}
 		},
 		draw: function(update_time) {
-			if (!draw_battle) world_draw(update_time);
+			if (!draw_battle) world_draw(0);
 		},
 		draw_gui: function(update_time) {
 			if (draw_battle) global.battle.draw_gui(update_time);
