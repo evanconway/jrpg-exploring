@@ -178,3 +178,5 @@ Started drawing the battle sprite for this enemy, but I want the battle to start
 The custom draw_enemies function idea might be a bust. I forgot that we had a special fadout animation handled for enemies, which relies on the enemy objects. We're also displaying health that way. I doubt we'll keep that but it's still another thing wrecked whenever we change the draw enemies function. Adding a draw_enemies_active variable gave us the flexibility to let the face fade in.
 
 However I still like the idea of being able to overwrite the draw_enemies and draw_background functions to determine how battles start. Maybe I should write a bunch of functions that make it easy to draw specific enemies so it's easier to recreate basic enemy drawing logic.
+
+Breifly explored using a different system for frame-time. One that didn't require passing down update_time to all functions. But I decided against it. That's because I actually want the ability to run functions with a time of 0. Mostly the draw functions. I guess it's sloppy but I know it works.
