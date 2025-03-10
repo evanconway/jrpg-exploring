@@ -172,3 +172,5 @@ Noticed there might be a flaw in the way I handle game logic right now. I have t
 The after image effect I added to the broken soul is terrible. Well, not terrible, but the shape is wrong. It looks way too vertical and stiff. I wonder if the base sprite should just be a ball and I somehow create the fake flames on top of it as part of the image.
 
 I don't like the way this enemy looks. But I feel like I should finish it for the sake of it. Next is a unique start animation.
+
+Started drawing the battle sprite for this enemy, but I want the battle to start with a fade to black then it's face to fade in. This has me thinking more about how we customize drawing things in battles. It occured to me we could customize the draw functions of the battle object. We just provide custom values for draw_enemies and draw_background. So for example, to have this face fade in, I could setup the intro animation to draw the face fading in, then just use the logic for the last part of that for the draw_enemies logic.

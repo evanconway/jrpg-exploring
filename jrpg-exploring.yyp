@@ -51,6 +51,7 @@
     {"id":{"name":"Util","path":"scripts/Util/Util.yy",},},
     {"id":{"name":"World","path":"scripts/World/World.yy",},},
     {"id":{"name":"spr_battle_zone","path":"sprites/spr_battle_zone/spr_battle_zone.yy",},},
+    {"id":{"name":"spr_broken_soul_battle_face","path":"sprites/spr_broken_soul_battle_face/spr_broken_soul_battle_face.yy",},},
     {"id":{"name":"spr_broken_soul_body","path":"sprites/spr_broken_soul_body/spr_broken_soul_body.yy",},},
     {"id":{"name":"spr_broken_soul_face","path":"sprites/spr_broken_soul_face/spr_broken_soul_face.yy",},},
     {"id":{"name":"spr_broken_soul_flame","path":"sprites/spr_broken_soul_flame/spr_broken_soul_flame.yy",},},

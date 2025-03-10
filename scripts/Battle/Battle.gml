@@ -1,12 +1,14 @@
 function Battle() constructor {
-	enemies = [];
+	enemies = []; 
 	draw_background = function () {
 		colorout_gui(1, c_gray);
 	};
 	on_end = function() {
 		show_debug_message("battle over");
 	};
-	static draw_enemies = function() {
+	draw_enemies_active = true;
+	draw_enemies = function(update_time) {
+		if (!draw_enemies_active) return;
 		/*
 		We may want to change this in the future so that enemy location
 		is given when the enemies our added. So instead of this function
@@ -45,6 +47,14 @@ when the active updateable isn't referencing it, we'll probably just create a ne
 and not bother setting this to undefined.
 */
 global.battle = new Battle();
+
+function battle_set_draw_background(draw_background) {
+	global.battle.draw_background = draw_background;
+}
+
+function battle_set_draw_enemies(draw_enemies) {
+	global.battle.draw_enemies = draw_enemies;
+}
 
 /**
  * Get a new enemy instance for a battle.
@@ -326,7 +336,7 @@ function battle_start(get_intro_animation=battle_get_intro_default) {
 /**
  * Set the on_end field of the current battle instance.
  */
-function battle_on_end(on_end = function() {}) {
+function battle_set_on_end(on_end = function() {}) {
 	global.battle.on_end = on_end;
 }
 

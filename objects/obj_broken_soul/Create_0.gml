@@ -62,14 +62,72 @@ update_wait = function(update_time) {
 
 movement_update = update_wait;
 
+battle_intro = function() {
+	return {
+		alpha: 1,
+		colorout_color: c_white,
+		draw_battle: false,
+		draw_face: false,
+		update: function(update_time) {
+			alpha -= frame_value_ms_convert(0.02, update_time);
+			if (alpha <= 0) {
+				alpha = 0;
+				update = fade_to_black;
+				colorout_color = c_black;
+			}
+		},
+		fade_to_black: function(update_time) {
+			alpha += frame_value_ms_convert(0.012, update_time);
+			if (alpha >= 1) {
+				alpha = 0;
+				draw_battle = true;
+				update = fade_in_face;
+				draw_face = true;
+			}
+		},
+		fade_in_face: function(update_time) {
+			alpha += frame_value_ms_convert(0.01, update_time);
+			if (alpha >= 1) {
+				global.battle.draw_enemies_active = true;
+				battle_return();
+			}
+		},
+		draw: function(update_time) {
+			if (!draw_battle) world_draw(0);
+		},
+		draw_gui: function(update_time) {
+			if (draw_battle) global.battle.draw_gui(update_time);
+			if (draw_face) {
+				draw_sprite_ext(
+					spr_broken_soul_battle_face,
+					0,
+					display_get_gui_width() / 2,
+					display_get_gui_height() / 2,
+					1,
+					1,
+					0,
+					c_white,
+					alpha
+				);
+			} else {
+				colorout_gui(alpha, colorout_color);
+			}
+		}
+	};
+};
+
 update = function(update_time) {
 	movement_update(update_time);
 	state_time -= (update_time);
 	
 	if (place_meeting(x, y, obj_player)) {
-		battle_start(battle_get_intro_flash_fade);
-		battle_enemy_add("bug", 40, spr_overworld_enemy);
-		battle_on_end(function() {
+		battle_start(battle_intro);
+		battle_enemy_add("Broken Soul", 40, spr_broken_soul_battle_face);
+		global.battle.draw_enemies_active = false;
+		battle_set_draw_background(function() {
+			colorout_gui(1, c_black);
+		});
+		battle_set_on_end(function() {
 			instance_destroy(id);
 		})
 	}

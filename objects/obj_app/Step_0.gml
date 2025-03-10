@@ -1,3 +1,5 @@
+var delta_time_milliseconds = 1/60 * 1000; //delta_time / 1000;
+
 if (keyboard_check_pressed(192) || keyboard_check_pressed(50)) {
 	global.console_open = !global.console_open;
 }
@@ -9,7 +11,6 @@ if (global.console_open) {
 }
 
 if (is_struct(global.updateable) && variable_struct_exists(global.updateable, "update")) {
-	var delta_time_milliseconds = delta_time / 1000;
 	global.updateable.update(delta_time_milliseconds);
 }
 
