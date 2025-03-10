@@ -7,7 +7,7 @@ function Battle() constructor {
 		show_debug_message("battle over");
 	};
 	draw_enemies_active = true;
-	draw_enemies = function(update_time) {
+	draw_enemies = function() {
 		if (!draw_enemies_active) return;
 		/*
 		We may want to change this in the future so that enemy location
@@ -38,6 +38,11 @@ function Battle() constructor {
 		draw_background();
 		draw_enemies();
 	};
+}
+
+function battle_draw(update_time) {
+	global.battle.draw_background();
+	global.battle.draw_enemies();
 }
 
 /*
@@ -121,7 +126,7 @@ function battle_message(text) {
 			battle_tdt_update(tdt, update_time, method(self, battle_return));
 		},
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			battle_draw(update_time);
 			battle_tdt_draw(tdt, update_time);
 		},
 	}
@@ -162,7 +167,7 @@ function battle_enemy_defeat(enemy_index) {
 			}
 		}, 
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			battle_draw(update_time);
 			battle_tdt_draw(tdt, update_time);
 		},
 	};
@@ -224,7 +229,7 @@ function battle_attack_choose() {
 			}
 		},
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			battle_draw(update_time);
 			battle_tdt_draw(tdt, update_time);
 			draw_set_alpha(1);
 			draw_set_color(c_black);
@@ -266,7 +271,7 @@ function battle_action_menu() {
 			new BattleActionOption("Attack", function() {}),
 		],
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			battle_draw(update_time);
 		}
 	};
 }
@@ -315,7 +320,7 @@ function battle_return() {
 		},
 		draw_gui: function(update_time) {
 			if (draw_battle) {
-				global.battle.draw_gui(update_time);
+				battle_draw(update_time);
 				battle_tdt_draw(tdt, update_time);
 			} else {
 				world_draw(0);
@@ -368,7 +373,7 @@ function battle_attack(enemy_id, damage) {
 			}
 		},
 		draw_gui: function(update_time) {
-			global.battle.draw_gui(update_time);
+			battle_draw(update_time);
 			colorout_gui(fade_alpha, c_white);
 			if (display_tdt) {
 				battle_tdt_draw(tdt, update_time);

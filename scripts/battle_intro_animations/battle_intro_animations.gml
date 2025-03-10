@@ -40,7 +40,7 @@ function battle_get_intro_flicker_fade() {
 			if (!draw_battle) world_draw(0);
 		},
 		draw_gui: function(update_time) {
-			if (draw_battle) global.battle.draw_gui(update_time);
+			if (draw_battle) battle_draw(update_time);
 			colorout_gui(blackout_alpha);
 		}
 	};
@@ -77,7 +77,7 @@ function battle_get_intro_flash_fade() {
 			if (!draw_battle) world_draw(0);
 		},
 		draw_gui: function(update_time) {
-			if (draw_battle) global.battle.draw_gui(update_time);
+			if (draw_battle) battle_draw(update_time);
 			colorout_gui(alpha, colorout_color);
 		}
 	};

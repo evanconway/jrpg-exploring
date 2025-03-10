@@ -96,7 +96,9 @@ battle_intro = function() {
 			if (!draw_battle) world_draw(0);
 		},
 		draw_gui: function(update_time) {
-			if (draw_battle) global.battle.draw_gui(update_time);
+			if (draw_battle) {
+				battle_draw(update_time)
+			}
 			if (draw_face) {
 				draw_sprite_ext(
 					spr_broken_soul_battle_face,
