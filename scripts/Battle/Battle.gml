@@ -153,7 +153,7 @@ function battle_enemy_defeat(enemy_index) {
 			}));
 		},
 		fade_enemy: function(update_time) {
-			global.battle.enemies[enemy_index].enemy_alpha -= frame_value_ms_convert(0.008, update_time);
+			global.battle.enemies[enemy_index].enemy_alpha -= value_cfr(0.008, update_time);
 			if (global.battle.enemies[enemy_index].enemy_alpha <= 0) {
 				global.battle.enemies = array_filter(global.battle.enemies, method(self, function(e, i) {
 					return i != enemy_index;
@@ -359,7 +359,7 @@ function battle_attack(enemy_id, damage) {
 			}));
 		},
 		attack_animation: function(update_time) {
-			fade_alpha -= frame_value_ms_convert(0.015, update_time);
+			fade_alpha -= value_cfr(0.015, update_time);
 			if (fade_alpha <= 0) {
 				fade_alpha = 0;
 				battle_message($"Dealt {damage} damage to {global.battle.enemies[enemy_index].name}.");

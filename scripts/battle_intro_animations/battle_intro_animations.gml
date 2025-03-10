@@ -23,7 +23,7 @@ function battle_get_intro_flicker_fade() {
 			}
 		},
 		fade_to_black: function(update_time) {
-			blackout_alpha += frame_value_ms_convert(0.012, update_time);
+			blackout_alpha += value_cfr(0.012, update_time);
 			if (blackout_alpha >= 1) {
 				blackout_alpha = 1;
 				draw_battle = true;
@@ -31,7 +31,7 @@ function battle_get_intro_flicker_fade() {
 			}
 		},
 		fade_from_black: function(update_time) {
-			blackout_alpha -= frame_value_ms_convert(0.012, update_time);
+			blackout_alpha -= value_cfr(0.012, update_time);
 			if (blackout_alpha <= 0) {
 				battle_return();
 			}
@@ -53,14 +53,14 @@ function battle_get_intro_flash_fade() {
 		colorout_color: c_white,
 		draw_battle: false,
 		update: function(update_time) {
-			alpha -= frame_value_ms_convert(0.02, update_time);
+			alpha -= value_cfr(0.02, update_time);
 			if (alpha <= 0) {
 				update = fade_to_black;
 				colorout_color = c_black;
 			}
 		},
 		fade_to_black: function(update_time) {
-			alpha += frame_value_ms_convert(0.012, update_time);
+			alpha += value_cfr(0.012, update_time);
 			if (alpha >= 1) {
 				alpha = 1;
 				draw_battle = true;
@@ -68,7 +68,7 @@ function battle_get_intro_flash_fade() {
 			}
 		},
 		fade_from_black: function(update_time) {
-			alpha -= frame_value_ms_convert(0.012, update_time);
+			alpha -= value_cfr(0.012, update_time);
 			if (alpha <= 0) {
 				battle_return();
 			}

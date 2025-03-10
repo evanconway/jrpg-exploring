@@ -14,7 +14,7 @@ after_image_alpha_diff = 0.25;
 after_image_fade_rate = 0.03;
 
 move = function(update_time) {
-	var change_dist = frame_value_ms_convert(move_speed, update_time);
+	var change_dist = value_cfr(move_speed, update_time);
 	if (dir == DIRECTION.UP) {
 		y -= change_dist;
 	}
@@ -69,7 +69,7 @@ battle_intro = function() {
 		draw_battle: false,
 		draw_face: false,
 		update: function(update_time) {
-			alpha -= frame_value_ms_convert(0.02, update_time);
+			alpha -= value_cfr(0.02, update_time);
 			if (alpha <= 0) {
 				alpha = 0;
 				update = fade_to_black;
@@ -77,7 +77,7 @@ battle_intro = function() {
 			}
 		},
 		fade_to_black: function(update_time) {
-			alpha += frame_value_ms_convert(0.012, update_time);
+			alpha += value_cfr(0.012, update_time);
 			if (alpha >= 1) {
 				alpha = 0;
 				draw_battle = true;
@@ -86,7 +86,7 @@ battle_intro = function() {
 			}
 		},
 		fade_in_face: function(update_time) {
-			alpha += frame_value_ms_convert(0.01, update_time);
+			alpha += value_cfr(0.01, update_time);
 			if (alpha >= 1) {
 				global.battle.draw_enemies_active = true;
 				battle_return();
@@ -195,8 +195,8 @@ draw_flames = function(update_time) {
 	
 	array_foreach(flames, method({ flame_decay_rate, flame_rise_rate, update_time }, function(f) {
 		draw_sprite_ext(spr_broken_soul_flame, f.index, f.x, f.y, 1, 1, 0, c_white, f.alpha);
-		f.alpha -= frame_value_ms_convert(flame_decay_rate, update_time);
-		f.y -= frame_value_ms_convert(flame_rise_rate, update_time);
+		f.alpha -= value_cfr(flame_decay_rate, update_time);
+		f.y -= value_cfr(flame_rise_rate, update_time);
 	}))
 	
 	flames = array_filter(flames, function(f) {
@@ -206,7 +206,7 @@ draw_flames = function(update_time) {
 
 draw = function(update_time) {	
 	draw_flames(update_time);
-	image_index += frame_value_ms_convert(0.05, update_time)
+	image_index += value_cfr(0.05, update_time)
 	draw_set_alpha(1);
 	draw_self();
 	draw_sprite(spr_broken_soul_face, get_face_index(), x, y);

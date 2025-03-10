@@ -14,12 +14,12 @@ function get_random_dir() {
  * Given a number value and frame time in milliseconds, return that value 
  * adjusted for the given frame rate. For example, at 60fps if a value of
  * 1 and a time of 14 milliseconds is given: the returned value will be 
- * 0.84.
+ * 0.84. CFR stands for "converted for frame rate".
  *
  * @param {real} value the number value to convert
  * @param {real} time time in milliseconds
  */
-function frame_value_ms_convert(value, time) {
+function value_cfr(value, time) {
 	var frame_mod = time / (1000 / game_get_speed(gamespeed_fps));
 	return value * frame_mod;
 }
