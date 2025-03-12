@@ -12,6 +12,9 @@ function world_update(update_time) {
 	with (obj_overworld_enemy) {
 		update(update_time);
 	}
+	with (obj_rat) {
+		update(update_time);
+	}
 	with (obj_broken_soul) {
 		update(update_time);
 	}
