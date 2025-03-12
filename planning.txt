@@ -188,3 +188,14 @@ Let's keep exploring enemy stuff. But I want to change enemies. Something more s
 I rewatched the move Ender's Game recently and I liked the fantasy game. Specifically I liked the idea of a very free-form game with no set game mechanics. Just exploring and situations that have to be solved. Although... the repition of consistent game mechanics definitely give the player something to latch on to. If it's changing too much it's just annoying. I'm not sure what I should do here. Something to think on.
 
 Just to keep moving, let's make this rat. I like the idea of exploring battle-specific player actions so let's add that. We should have more than 1 action, maybe "shoo" the rat and try to trap it. Also I haven't added the ability to lose yet so we should do that as well. Maybe the lose conditions should be battle specific as well? Maybe for the rat instead of taking damage it inches closer to escaping. Actually I want it to steal things from you, and when it's stolen everything you lose. Maybe it should steal peanuts or something.
+
+
+March 12, 2025
+
+We added some basic sprite animations for a rat moving around. I dunno, it looks ok. I'm not in love with it. This is making me wonder how much work is worth making unique overworld enemy animations. It got me thinking about Earthbound, and I realized that game only has 6 sprites for each enemy: 2 facing towards camera, 2 facing away from camera, and 2 facing sideways. Technically it's 8 because there are left and right variations of the sideways sprites, but we can just create those with mirroring. Although that's cool, I'm not sure I want to copy Earthbound's style exactly. Honestly that weird 1 foot raised idle pose is part of its unique charm. And using that feels like stealing.
+
+I'm also aware that part of the reason I made the rat animations is that I have a vision for the rat. I knew that I wanted its nose to twitch before it moved.
+
+Though we don't have to commit to tons of art for each overworld enemy. Some of them could be very simple. Actually... although I'm not happy with specifically the rat, it proves that we don't have to commit to a certain amount of art for any enemy. We could even use generic overworld enemy art as a placeholder, then add cool overworld art and animations once we have something we're happy with.
+
+Ah, but I never actually finished this rat. We haven't made the battle mechanics. That will be our next task.
