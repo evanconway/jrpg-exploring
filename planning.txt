@@ -199,3 +199,14 @@ I'm also aware that part of the reason I made the rat animations is that I have 
 Though we don't have to commit to tons of art for each overworld enemy. Some of them could be very simple. Actually... although I'm not happy with specifically the rat, it proves that we don't have to commit to a certain amount of art for any enemy. We could even use generic overworld enemy art as a placeholder, then add cool overworld art and animations once we have something we're happy with.
 
 Ah, but I never actually finished this rat. We haven't made the battle mechanics. That will be our next task.
+
+
+March 17th, 2025
+
+Going to add a bit of code for battles just to keep the ball rolling. We need to finish this rat enemy, and the next key part is the ability for the rat to take actions. This is actually fairly significant because it involves a way to display a gamestate in the battle state, update it through the battle, and determine when enemies can take a "turn".
+
+For now, let's just create some global object with player health. Or in this case I guess peanuts because we said we wanted the rat to do something non-violent like steal peanuts. As for taking turns, let's just have the battle alternate between player and all enemies for now. We could use enemy index for this and start at -1 to indicate it's the player turn.
+
+Since enemies should have their own unique attacks, that data should be stored in the enemy of the battle itself. I think all enemy actions should be stored within the enemy.
+
+I think we should rework how enemies are added to battles. Actions could just be functions in a list. And we could write special code to determine what action an enemy takes at any given time on a per-enemy basis.

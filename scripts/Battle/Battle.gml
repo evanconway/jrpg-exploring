@@ -1,5 +1,6 @@
 function Battle() constructor {
 	enemies = []; 
+	turn_index = -1; // -1 for player, 0 and above for enemies
 	draw_background = function () {
 		colorout_gui(1, c_gray);
 	};
@@ -291,7 +292,11 @@ function battle_return() {
 		}
 	}
 	if (array_length(global.battle.enemies) > 0) {
-		battle_attack_choose();
+		if (global.battle.turn_index < 0) {
+			battle_attack_choose();
+		}
+		
+		global.battle.turn_index += 1;
 		return;
 	}
 	global.updateable = {
